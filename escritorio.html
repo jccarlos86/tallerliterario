@@ -16,31 +16,25 @@
             <div class="col-sm-12">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white" data-toggle="modal" data-target="#exampleModalCenter">
+                        <a href="#" id="guardarTexto" class="nav-link text-white">
                             <i class="fas fa-save h4"></i>
                             <span class="text-white">Guardar</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white" data-toggle="modal" data-target="#exampleModalCenter">
+                        <a href="#" class="nav-link text-white" data-toggle="modal" data-target="#modalAutoGuardar">
                             <i class="fas fa-stopwatch h4"></i>
                             <span class="text-white">Auto Guardar</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white" data-toggle="modal" data-target="#exampleModalCenter">
-                            <i class="fas fa-bell h4"></i>
-                            <span class="text-white">Alerta</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-white" data-toggle="modal" data-target="#exampleModalCenter">
+                        <a href="#" class="nav-link text-white" data-toggle="modal" data-target="#modalVersiones">
                             <i class="fas fa-code-branch h4"></i>
                             <span class="text-white">Versiones</span>
                         </a>
                     </li>
                     <!-- <li class="nav-item">
-                      <a class="nav-link text-white" data-toggle="modal" href="#" data-target="#exampleModalCenter">
+                      <a class="nav-link text-white">
                         <i class="fas fa-bars h4"></i>
                       </a>
                     </li> -->
@@ -48,6 +42,11 @@
             </div>
         </div>
         <!-- libreta -->
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="">Version: 5</label>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <form>
@@ -59,21 +58,54 @@
         </div>
         
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="modalAutoGuardar" tabindex="-1" role="dialog" aria-labelledby="modalAutoGuardarTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Titulo</h5>
+                <h5 class="modal-title" id="modalAutoGuardarTitle">Configurar auto guardado</h5>
                 <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
-                    Guardar, programar tiempo de auto guardado, ver versiones de este escrito, 
-                    programar una libreta (esto es para aquellos que solo quieren escribir por un determinado tiempo)
+                    <form>
+                        <div class="form-group">
+                          <label for="exampleFormControlInput1">Elige el tiempo en minutos para que se ejecute el guardado automatico</label>
+                          <select class="custom-select mr-sm-2" id="selectMinutos">
+                            <option selected>Selecciona</option>
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                          </select>
+                        </div>
+                      </form>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnAutoGuardar" data-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- modal versiones -->
+        <div class="modal fade" id="modalVersiones" tabindex="-1" role="dialog" aria-labelledby="modalVersionesTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="modalVersionesTitle">Versiones</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    Listado de versiones para este texto...
+                    <br>
+                    <a href="#" id="nuevaVersion">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Crear nueva version</span>
+                    </a>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
             </div>
@@ -81,5 +113,7 @@
     </div>
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/constantes.js"></script>
+    <script src="js/funcionesLibreta.js"></script>
 </body>
 </html>
