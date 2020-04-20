@@ -1,18 +1,22 @@
 <?php
 include 'conexion.php';
+
 $usrId = $_POST['userId'];
 $nombre = $_POST['nombre'];
 $txt = $_POST['texto'];
-$version = $_POST['version'];
+$idTexto = $_POST['idTexto'];
 $index = $_POST['index'];
+$titulo = $_POST['titulo'];
 
 
- $insert = $con -> query("insert into TextosUsuarios (id, UserId, nombre, texto, version, index)
- values ('', '$usrId', '$nombre', '$txt', '$version', '$index')");
-
+ $insert = $con -> query("insert into TextosUsuarios (id, texto, idUsuario, nombreUsuario, idTexto, indexTexto, tituloTexto)
+ values ('', '$txt', '$usrId', '$nombre', '$idTexto', '$index', '$titulo')");
+ $result;
  if($insert){
-    echo "Guardado";
+   $result = "Guardado";
  }else{
-    echo "no se ha guardado";
+    $result = die("Connection failed: " . mysqli_connect_error());
  }
+ echo $result;
+ mysqli_close($con);
 ?>
