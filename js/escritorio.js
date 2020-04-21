@@ -21,27 +21,6 @@ function limpiarAutoGuardar(id){
     clearInterval(id);
 }
 
-function guardarTexto(userId, nombre, texto, idTexto, index, tituloTexto){
-    $.ajax({
-        data: {
-            userId: userId, 
-            nombre: nombre, 
-            texto: texto, 
-            idTexto: idTexto, 
-            index: index, 
-            titulo: tituloTexto
-        },
-        url:   '../php/guardar.php',
-        type:  'post',
-        beforeSend: function () {
-            console.log("enviando datos para guardar en DB");
-        },
-        success:  function (response) {
-            console.log(response);
-        }
-    });
-}
-
 function obtenerTexto(){
     //obtener valores de usuario y texto.
     var texto = $("#hojaTexto").val().split("\n");
@@ -51,12 +30,13 @@ function obtenerTexto(){
     titulo = "Test de guardado";
     if(texto.length > 0 && texto[0].length > 0){
         for(var a = 0; a < texto.length; a++){
-            guardarTexto(userId, nombre, texto[a], idTexto, a, titulo);
+            //actualizarTexto(userId, nombre, texto[a], idTexto, a, titulo);
         }
     }else{
         alert("el campo de texto se encuentra vacio, no hay datos por guardar");
     }
 }
+
 
 //------>triggers
 $("#guardarTexto").click(function(){

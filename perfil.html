@@ -24,6 +24,14 @@
         <!-- contenido -->
         <div class="row">
             <div class="col-sm-12">
+                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#modalNuevoTexto" >
+                    <i class="fas fa-pen-alt"></i>
+                    Crear Texto
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
                 <table class="table w-75 mx-auto">
                     <thead>
                       <tr>
@@ -60,9 +68,42 @@
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <input type="text" value="Juan Carlos" id="usrName">
+                <input type="text" value="12" id="usrId">
+                <input type="text" value="32465" id="IdTexto">
+            </div>
+        </div>
+        <!-- modal -->
+        <div class="modal fade" id="modalNuevoTexto" tabindex="-1" role="dialog" aria-labelledby="modalNuevoTextoTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modalNuevoTextoTitle">Configurar auto guardado</h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <label for="tituloTexto">Titulo del Texto</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="tituloTexto" aria-describedby="basic-addon3" placeholder="Escribe un titulo para tu texto">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnCrearTexto" data-dismiss="modal">Crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/constantesPerfil.js"></script>
+    <script src="js/perfil.js"></script>
 </body>
 </html>
