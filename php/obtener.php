@@ -5,11 +5,15 @@ include 'conexion.php';
 0 - buscar solo el titulo del texto para el usuario (crear nuevo texto)
 1 - buscar titulos de textos creados por el usuario (colocar su lista de textos creados)
 2 - buscar contenido del texto (cargar el texto completo)
+3 - buscar correo electronico (no debe haber dulicados)
+4 - validar Perfil ID (no debe haber duplicados)
 */
 $tipo = $_POST["tp"];
 $titulo = $_POST["ttl"];
 $idTexto = $_POST["idtx"];
 $idUsuario = $_POST["idus"];
+$email = $_POST['email'];
+$perfilid = $_POST['pfid'];
 
 $sel;
 $query;
@@ -59,6 +63,35 @@ switch ($tipo){
             $result = die("Connection failed: " . mysqli_connect_error());
         }
     break;
+    case 3: 
+        $query = "SELECT correo FROM Usuarios WHERE correo = '$email'";
+        $sel = $con ->query($query);
+        if($sel){
+            $row_cnt = $sel->num_rows;
+            if($row_cnt > 0) {
+                $result = "true";
+            }else{
+                $result = "false";
+            }
+        }else{
+            $result = die("Connection failed: " . mysqli_connect_error());
+        }
+    break;
+    case 4:
+        $query = "SELECT perfilId FROM Usuarios WHERE perfilId = '$perfilid'";
+        $sel = $con ->query($query);
+        if($sel){
+            $row_cnt = $sel->num_rows;
+            if($row_cnt > 0) {
+                $result = "true";
+            }else{
+                $result = "false";
+            }
+        }else{
+            $result = die("Connection failed: " . mysqli_connect_error());
+        }
+    break;
+    default:break;
 }
 echo $result;
 mysqli_close($con);
