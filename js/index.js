@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-$(document).ready(function(){
-
-});
-
-=======
->>>>>>> usuarios
 //-------->funciones
 function validarPassword(){
     var pass1 = $("#password").val();
