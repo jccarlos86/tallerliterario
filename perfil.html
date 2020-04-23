@@ -13,18 +13,18 @@
         <!-- encabezado -->
         <div class="row pt-1 pb-5">
             <div class="col-sm-4 text-center">
-                <img src="img/eva-andresa.jpg" class="w-50 rounded-circle pt-3 pb-3" alt="">
+                <i class="fas fa-user-tie h4"></i>
             </div>
             <div class="col-sm-8">
-                <h4>
-                    Nombre del usuario
-                </h4>
+                <input type="text" id="usuario">
+                <input type="text" id="nombre">
+                <input type="text" id="apellido">
             </div>
         </div>
         <!-- contenido -->
-        <div class="row">
+        <div class="row pt-3 pb-3">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#modalNuevoTexto" >
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalNuevoTexto" >
                     <i class="fas fa-pen-alt"></i>
                     Crear Texto
                 </button>
@@ -32,47 +32,17 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table w-75 mx-auto">
+                <table id="tblTextos" class="table w-75 mx-auto">
                     <thead>
                       <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Versiones</th>
+                        <th scope="col">Titulo</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                            <a href="#">
-                                <i class="fas fa-book h4"></i> Mark
-                            </a>
-                        </td>
-                        <td>24</td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <a href="#">
-                                <i class="fas fa-book h4"></i> Jacob
-                            </a>
-                        </td>
-                        <td>18</td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <a href="#">
-                                <i class="fas fa-book h4"></i> Larry
-                            </a>
-                        </td>
-                        <td>5</td>
-                      </tr>
                     </tbody>
+                    <tfoot>
+                    </tfoot>
                 </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <input type="text" value="Juan Carlos" id="usrName">
-                <input type="text" value="12" id="usrId">
-                <input type="text" value="32465" id="IdTexto">
             </div>
         </div>
         <!-- modal -->
@@ -80,7 +50,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="modalNuevoTextoTitle">Configurar auto guardado</h5>
+                    <h5 class="modal-title" id="modalNuevoTextoTitle">Crear un nuevo texto</h5>
                     <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -94,7 +64,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnCrearTexto" data-dismiss="modal">Crear</button>
+                    <button type="button" class="btn btn-success" id="btnCrearTexto">Crear</button>
                     </div>
                 </div>
             </div>

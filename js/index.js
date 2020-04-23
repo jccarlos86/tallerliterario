@@ -11,6 +11,7 @@ function validarPassword(){
         pass2.length > 0 ){
         if(pass1 == pass2){
             existeMail(mail);
+            //validarEmail(mail);
         }else{
             alert("las contrasenas no coinciden.");
         }
@@ -19,13 +20,21 @@ function validarPassword(){
     }
 }
 
+// function validarEmail(valor) {
+//     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(valor)){
+//         //alert("La dirección de email " + valor + " es correcta.");
+//         existeMail(valor);
+//     } else {
+//         alert("La dirección de email es incorrecta.");
+//     }
+// }
+
 function existeMail(email){
     $.ajax({
         data: {
-            email: email,
-            tp: 3
+            email: email
         },
-        url:   '../php/obtener.php',
+        url:   '../php/index/consultarMail.php',
         type:  'post',
         beforeSend: function () {
             console.log("Validando correo...");
@@ -38,6 +47,9 @@ function existeMail(email){
                 case "false":
                     //crear usuario.
                     generarIdPerfil();
+                    break;
+                case response.startsWith("Formato"):
+                    alert(response);
                     break;
                 default:
                     console.log("Error: " + response);
@@ -55,10 +67,9 @@ function generarIdPerfil(){
 function existeId(id){
     $.ajax({
         data: {
-            tp: 4,
             pfid: id
         },
-        url:   '../php/obtener.php',
+        url:   '../php/index/consultarId.php',
         type:  'post',
         beforeSend: function () {
             console.log("enviando datos para guardar en DB");
@@ -89,26 +100,75 @@ function crearUsuario(email, password, perfilId){
             password: password,
             perfilid: perfilId
         },
-        url:   '../php/crearUsuario.php',
+        url:   '../php/index/crearUsuario.php',
         type:  'post',
         beforeSend: function () {
             console.log("Creando usuario...");
         },
         success:  function (response) {
-            if(response == "Guardado"){
-                $("#exampleModalCenter").modal("hide");
-                alert("Usuario creado exitosamente.");
-                setTimeout(() => {
-                    window.location.href="http://tallerliterario.c2-technologies.com/perfil.html?id=" + perfilId;
-                }, 1500);
-            }else{
-                console.log("Error: " + response);
+            switch(response){
+                case "true":
+                    $("#modalRegistro").modal("hide");
+                    alert("Usuario creado exitosamente.");
+                    setTimeout(() => {
+                        window.location.href="perfil.html?upi=" + perfilId;
+                    }, 1500);
+                break;
+                case response.startsWith("Formato"):
+                    alert(response);
+                break;
+                default:
+                    console.log("Error: " + response);
+                break;
             }
         }
     });
 }
 
+function validarCredenciales(){
+    var mail = $("#emailIngreso").val();
+    var pass = $("#passwordIngreso").val();
+    if(mail.length > 0 && pass.length > 0){
+        accesoUsuario(mail, pass);
+    }else{
+        alert("Todos los campos deben ser llenados.");
+    }
+}
+
+function accesoUsuario(mail, pass){
+    $.ajax({
+        data: {
+            email: email,
+            password: password
+        },
+        url:   '../php/index/accesar.php',
+        type:  'post',
+        beforeSend: function () {
+            console.log("Consultando datos...");
+        },
+        success: function (response) {
+            switch(response){
+                case response.startsWith("Formato"):
+                    alert(response);
+                break;
+                case response.startsWith("Connection"):
+                    console.log("Error: " + response);
+                break;
+                case "false":
+                    alert("No se encontraron registros.");
+                break;
+                default: 
+                    window.location.href="perfil.html?upi=" + response;
+                break;
+            }
+        }
+}
+
 //-------->triggers
 $("#crearUsuario").click(function(){
     validarPassword();
+});
+
+$("#ingresar").click(function(){
+    validarCredenciales();
 });
