@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 });
+
 //-------->funciones
 function validarPassword(){
     var pass1 = $("#password").val();
