@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 $(document).ready(function(){
 
 });
 
+=======
+>>>>>>> usuarios
 //-------->funciones
 function validarPassword(){
     var pass1 = $("#password").val();
@@ -12,7 +15,6 @@ function validarPassword(){
         pass2.length > 0 ){
         if(pass1 == pass2){
             existeMail(mail);
-            //validarEmail(mail);
         }else{
             alert("las contrasenas no coinciden.");
         }
@@ -20,15 +22,6 @@ function validarPassword(){
         alert("todos los campos deben ser completados.");
     }
 }
-
-// function validarEmail(valor) {
-//     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(valor)){
-//         //alert("La dirección de email " + valor + " es correcta.");
-//         existeMail(valor);
-//     } else {
-//         alert("La dirección de email es incorrecta.");
-//     }
-// }
 
 function existeMail(email){
     $.ajax({
@@ -41,11 +34,11 @@ function existeMail(email){
             console.log("Validando correo...");
         },
         success:  function (response) {
-            switch(response){
-                case "true":
+            switch(true){
+                case response == "true":
                     alert("El correo ya se encuentra registrado, prueba con otro correo");
                     break;
-                case "false":
+                case response == "false":
                     //crear usuario.
                     generarIdPerfil();
                     break;
@@ -107,8 +100,8 @@ function crearUsuario(email, password, perfilId){
             console.log("Creando usuario...");
         },
         success:  function (response) {
-            switch(response){
-                case "true":
+            switch(true){
+                case response == "true":
                     $("#modalRegistro").modal("hide");
                     alert("Usuario creado exitosamente.");
                     setTimeout(() => {
@@ -139,8 +132,8 @@ function validarCredenciales(){
 function accesoUsuario(mail, pass){
     $.ajax({
         data: {
-            email: email,
-            password: password
+            email: mail,
+            password: pass
         },
         url:   '../php/index/accesar.php',
         type:  'post',
@@ -148,14 +141,14 @@ function accesoUsuario(mail, pass){
             console.log("Consultando datos...");
         },
         success: function (response) {
-            switch(response){
+            switch(true){
                 case response.startsWith("Formato"):
                     alert(response);
                 break;
                 case response.startsWith("Connection"):
                     console.log("Error: " + response);
                 break;
-                case "false":
+                case response == "false":
                     alert("No se encontraron registros.");
                 break;
                 default: 
