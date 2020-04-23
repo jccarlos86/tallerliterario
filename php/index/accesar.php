@@ -5,27 +5,22 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 $result;
-$jsonArray = array();
 //encriptar password para validarlo, se recibe el password como texto simple, se encripta y se compara.
 //cifrar($password, $id, $num);
 
 if(empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
     $result = "Formato: El formato de e-mail no es valido.";
 }else{
-    $sel = $con -> query("SELECT perfilId FROM Usuarios WHERE contrasena = '$password' AND correo = '$email'");
+    $sel = $con -> query("SELECT perfilId FROM Usuarios WHERE contrasena = '$password' AND correo = '$email' AND estatus = '1'");
     if($sel){
-        //  $row_cnt = $sel->num_rows;
-        //  if($row_cnt > 0){
-        //     while($row = mysqli_fetch_assoc($sel)){
-        //         $id = $row['perfilId'];
-        //         $jsonArray[] = array("PerfilID" => $id);
-        //     }
-        //     $result = json_encode($jsonArray);
-        //     }else{
-        //         $result = "false";
-        //     }
-        // }
-        $result = "true";
+        $row_cnt = $sel->num_rows;
+        if($row_cnt > 0){
+            while($row = mysqli_fetch_assoc($sel)){
+                $result = $row['perfilId'];
+            }
+        }else{
+            $result = "false";
+        }
     }else{
         $result = die("Connection failed: " . mysqli_connect_error());
     }

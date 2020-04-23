@@ -14,7 +14,7 @@ $result;
 if(empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
     $result = "Formato: El formato de e-mail no es valido.";
 }else{
-    $insert = $con -> query("insert into Usuarios (id, perfilId, nombres, apellidos, usuario, contrasena, correo, status)
+    $insert = $con -> query("insert into Usuarios (id, perfilId, nombres, apellidos, usuario, contrasena, correo, estatus)
     values ('', '$perfilId', 'NOMBRES', 'APELLIDOS', 'USUARIO', '$password', '$email', '1')");
     
     if($insert){
