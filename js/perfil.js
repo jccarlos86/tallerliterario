@@ -1,18 +1,18 @@
 $(document).ready(function(){
     //al cargar, obtener los datos del usuario.
-    parametrosUrl();
+    var result = parametrosUrl();
+    datosUsuario.upi = result.upi;
+    cargarDatosUsuario();
+    cargarTextos();
 });
 
 function datosCrearTexto(){
     var titulo = $("#tituloTexto").val();
-    var userId = $("#usrId").val();
-    var nombre = $("#usrName").val();
-    var idTexto = $("#IdTexto").val();
-
     if(titulo.length > 0){
         //validar que no exista un texto repetido.
         if(!existeTitulo(titulo)){
-            //crearTexto(userId, nombre, escape(nuevoTexto.txtDefault), idTexto, 0, escape(titulo));
+            //generar idTexto.
+            generarIdTexto();
         }
     }else{
         alert("Agrega un titulo al texo");
@@ -56,7 +56,7 @@ function existeId(id){
                     generarIdPerfil();
                 break;
                 case "false":
-                    crearTexto();
+                    crearTexto(id);
                 break;
                 default: 
                     console.log("Error: " + response);
@@ -66,13 +66,13 @@ function existeId(id){
     });
 }
 
-function crearTexto(nombre, idTexto, tituloTexto, perfilid){
+function crearTexto(idTexto){
+    var titulo = $("#tituloTexto").val();
     $.ajax({
         data: {
-            nombre: nombre,
+            titulo: escape(titulo),
             idTexto: idTexto,
-            titulo: tituloTexto,
-            perfilid: perfilid
+            perfilid: datosUsuario.upi
         },
         url:   '../php/perfil/crearTexto.php',
         type:  'post',
@@ -80,10 +80,14 @@ function crearTexto(nombre, idTexto, tituloTexto, perfilid){
             console.log("enviando datos para guardar en DB");
         },
         success:  function (response) {
-            if(response == "Guardado"){
-                setTimeout(() => {
-                    window.location.href = "libreta.html?ti=" + idTexto;
-                }, 1000);
+            if(response == "true"){
+                if($("#irTexto").prop("checked")){
+                    setTimeout(() => {
+                        window.location.href = "libreta.html?ti=" + idTexto;
+                    }, 1000);
+                }else{
+                    cargarTextos();
+                }
             }else{
                 console.log("Error: " + response);
             }
@@ -112,29 +116,63 @@ function consultar(tp, ttl, idtx, idus){
 
 function parametrosUrl(){
     var result = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         result[key] = value;
     });
-    cargarDatosUsuario(result);
+    return result;
 }
 
-function cargarDatosUsuario(params){
+function cargarDatosUsuario(){
     $.ajax({
         data: {
-            idperfil: params.upi
+            idperfil: datosUsuario.upi
         },
         url:   '../php/perfil/datosUsuario.php',
         type:  'post',
         beforeSend: function () {
-            console.log("enviando datos para guardar en DB");
+            console.log("Consultando...");
         },
         success:  function (response) {
-            if(response.startsWith("Connection")){
-                console.log("Error: " + response);
-            }else{
-                var data = JSON.parse(response);
-                console.log(data);
-                crearTabla(data);
+            switch(true){
+                case response.startsWith("Connection"):
+                    break;
+                // case response == null:
+                //     alert("aun no has creado textos.");
+                //     break;
+                case response != null || response != undefined:
+                    var data = JSON.parse(response);
+                    console.log(data);
+                    $("#usuario").val(unescape(data[0].Usuario));
+                    $("#nombre").val(unescape(data[0].Nombre));
+                    $("#apellido").val(unescape(data[0].Apellido));
+                    break;   
+            }
+        }
+    });
+}
+
+function cargarTextos(){
+    $.ajax({
+        data: {
+            idperfil: datosUsuario.upi
+        },
+        url:   '../php/perfil/textosUsuario.php',
+        type:  'post',
+        beforeSend: function () {
+            console.log("Consultando...");
+        },
+        success:  function (response) {
+            switch(true){
+                case response.startsWith("Connection"):
+                    break;
+                case response == "null":
+                    alert("aun no has creado textos.");
+                    break;
+                case response != null || response != undefined:
+                    var data = JSON.parse(response);
+                    console.log(data);
+                    crearTabla(data);
+                    break;   
             }
         }
     });
@@ -143,15 +181,49 @@ function cargarDatosUsuario(params){
 function crearTabla(data){
     var rows = "";
     for(var d = 0; d < data.length; d++){
-        rows += "<tr><td class='titulos' data-idTxt = '" + data[d].ID + "'><i class='fas fa-book-reader'></i><span>"+ unescape(data[d].Titulo) + "</span></td></tr>";
+        rows += "<tr>";
+        rows += "<td><a href='libreta.html?ti=" + data[d].ID + "'><i class='far fa-edit'></i></a></td>";
+        rows += "<td class = 'titulos'><span>"+ unescape(data[d].Titulo) + "</span></td></tr>";
     }
     $("#tblTextos tbody").html(rows);
-    $("#nombre").val(data[0].Nombre);
-    $("#apellido").val(data[0].Apellido);
-    $("#usuario").val(data[0].Usuario);
+}
+
+function actualizarDatosUsuario(){
+    var usr = $("#usuario").val();
+    var name = $("#nombre").val();
+    var apellido = $("#apellido").val();
+
+    $.ajax({
+        data: {
+            idperfil: datosUsuario.upi,
+            usuario: escape(usr),
+            nombre: escape(name),
+            apellido: escape(apellido)
+        },
+        url:   '../php/perfil/actualizarDatosUsuario.php',
+        type:  'post',
+        beforeSend: function () {
+            console.log("Actualizando...");
+        },
+        success:  function (response) {
+            switch(true){
+                case response.startsWith("Connection"):
+                    console.log("Error: " + response);
+                    break;
+                case response == "true":
+                    alert("Datos actualizados correctamente");
+                    break;   
+            }
+        }
+    });
+
 }
 
 //------------->triggers
 $("#btnCrearTexto").click(function(){
     datosCrearTexto();
+});
+
+$("#editarDatosUsuario").click(function(){
+    actualizarDatosUsuario();
 });

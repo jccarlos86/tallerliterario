@@ -19,6 +19,7 @@
                 <input type="text" id="usuario">
                 <input type="text" id="nombre">
                 <input type="text" id="apellido">
+                <button type="button" id="editarDatosUsuario" class="btn btn-success">Editar datos de usuario</button>
             </div>
         </div>
         <!-- contenido -->
@@ -35,6 +36,7 @@
                 <table id="tblTextos" class="table w-75 mx-auto">
                     <thead>
                       <tr>
+                        <th scope="col">Editar</th>
                         <th scope="col">Titulo</th>
                       </tr>
                     </thead>
@@ -61,6 +63,12 @@
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="tituloTexto" aria-describedby="basic-addon3" placeholder="Escribe un titulo para tu texto">
                             </div>
+                            <div class="input-group mb-">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="irTexto">
+                                    <label class="custom-control-label" for="irTexto">Ir al texto despu&eacute;s de crearlo.</label>
+                                  </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -73,7 +81,7 @@
 
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/constantesPerfil.js"></script>
-    <script src="js/perfil.js"></script>
+    <script src="js/constantesPerfil.js?v=12"></script>
+    <script src="js/perfil.js?v=12"></script>
 </body>
 </html>
