@@ -34,7 +34,7 @@
                         </a>
                     </li> -->
                     <li class="nav-item">
-                        <a href="perfil.html" class="nav-link text-white">
+                        <a id="volver" href="perfil.html" class="nav-link text-white">
                             <i class="fas fa-arrow-left h4"></i>
                             <span class="text-white">Volver</span>
                         </a>
@@ -48,11 +48,13 @@
             </div>
         </div>
         <!-- libreta -->
-        <!-- <div class="row">
+        <div class="row pt-3 pb-3">
             <div class="col-sm-12">
-                <label for="">Version: 5</label>
+                <label for="">Titulo</label>
+                <input id="titulo" type="text">
+                <button type="button" id="actualizarTitulo" class="btn btn-success">Actualizar titulo</button>
             </div>
-        </div> -->
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <form>
@@ -82,9 +84,11 @@
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
                           </select>
                         </div>
-                      </form>
+                    </form>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="btnAutoGuardar" data-dismiss="modal">Guardar</button>

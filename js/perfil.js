@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    //validar mayusculas y minusculas
+    jQuery.expr[':'].Contains = function(a, i, m) {
+        return jQuery(a).text().toUpperCase()
+        .indexOf(m[3].toUpperCase()) >= 0;
+    };
     //al cargar, obtener los datos del usuario.
     var result = parametrosUrl();
     datosUsuario.upi = result.upi;
@@ -21,21 +26,12 @@ function datosCrearTexto(){
 
 function existeTitulo(titulo){
     var result = false;
-    var coincidencias = 0;
-    $(".titulos").children("span").each(function(){
-        var txt = $(this).html();
-        if(txt.toLowerCase() == titulo.toLowerCase()){
-            coincidencias++;
-        }
-    });
-    if(coincidencias > 0){
-        result = true;
-    }
+    if($(".titulos span:Contains('" + titulo + "')") > 0) result = true;
     return result;
 }
 
 function generarIdTexto(){
-    var id = Math.round(Math.random() * 9999999999);
+    var id = Math.round(Math.random() * 999999999);
     existeId(id);
 }
 
@@ -53,7 +49,7 @@ function existeId(id){
             switch(response){
                 case "true":
                     console.log("el id ya existe, se generara uno nuevo...");
-                    generarIdPerfil();
+                    generarIdTexto();
                 break;
                 case "false":
                     crearTexto(id);
@@ -77,16 +73,18 @@ function crearTexto(idTexto){
         url:   '../php/perfil/crearTexto.php',
         type:  'post',
         beforeSend: function () {
-            console.log("enviando datos para guardar en DB");
+            console.log("Guardando...");
         },
         success:  function (response) {
             if(response == "true"){
                 if($("#irTexto").prop("checked")){
                     setTimeout(() => {
-                        window.location.href = "libreta.html?ti=" + idTexto;
+                        window.location.href = "libreta.html?ti=" + idTexto + "&upi =" + datosUsuario.upi;
                     }, 1000);
                 }else{
                     cargarTextos();
+                    $("#tituloTexto").val("");
+                    $("#modalNuevoTexto").modal("hide");
                 }
             }else{
                 console.log("Error: " + response);
@@ -182,7 +180,7 @@ function crearTabla(data){
     var rows = "";
     for(var d = 0; d < data.length; d++){
         rows += "<tr>";
-        rows += "<td><a href='libreta.html?ti=" + data[d].ID + "'><i class='far fa-edit'></i></a></td>";
+        rows += "<td><a href='libreta.html?ti=" + data[d].ID + "&upi=" + datosUsuario.upi + "&ttx=" + data[d].Titulo + "'><i class='far fa-edit'></i></a></td>";
         rows += "<td class = 'titulos'><span>"+ unescape(data[d].Titulo) + "</span></td></tr>";
     }
     $("#tblTextos tbody").html(rows);
@@ -216,7 +214,6 @@ function actualizarDatosUsuario(){
             }
         }
     });
-
 }
 
 //------------->triggers
