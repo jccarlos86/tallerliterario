@@ -5,8 +5,8 @@ $titulo = $_POST['titulo'];
 $perfilId = $_POST['perfilid'];
 $idTexto = $_POST['idTexto'];
 
- $insert = $con -> query("insert into TextosUsuarios (id, texto, idTexto, indexTexto, tituloTexto, perfilId)
- values ('', 'Comienza a escribir en esta area.', '$idTexto', '0', '$titulo', '$perfilId')");
+ $insert = $con -> query("insert into TextosUsuarios (id, texto, idTexto, indexTexto, tituloTexto, perfilId, estatus)
+ values ('', 'Comienza a escribir en esta area.', '$idTexto', '0', '$titulo', '$perfilId', '0')");
  $result;
  if($insert){
    $result = "true";

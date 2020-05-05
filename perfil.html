@@ -5,48 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/fontAwesome/all.min.css">
-    <link rel="stylesheet" href="resources/animateCSS/animate.css">
+    <link rel="stylesheet" href="resources/animateCSS/animate.css?v=9999999999999999999">
+    <link rel="stylesheet" href="css/loader.css?v=9999999999999999999">
     <title>Perfil</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <!-- encabezado -->
-        <div class="row pt-1 pb-5">
-            <div class="col-sm-4 text-center">
-                <i class="fas fa-user-tie h4"></i>
-            </div>
-            <div class="col-sm-8">
-                <input type="text" id="usuario">
-                <input type="text" id="nombre">
-                <input type="text" id="apellido">
-                <button type="button" id="editarDatosUsuario" class="btn btn-success">Editar datos de usuario</button>
-            </div>
-        </div>
-        <!-- contenido -->
-        <div class="row pt-3 pb-3">
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalNuevoTexto" >
-                    <i class="fas fa-pen-alt"></i>
-                    Crear Texto
-                </button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <table id="tblTextos" class="table w-75 mx-auto">
-                    <thead>
-                      <tr>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Titulo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
+    <div class="container bg-light">
+        <!-- menu de opciones -->
+        <div class="row pb-3">
+            <div class="col-sm-12 p-0">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mr-4">
+                            <button type="button" class="btn btn-outline-success rounded-circle" data-toggle="modal" data-target="#modalNuevoTexto" >
+                                <i class="fas fa-feather-alt"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item mr-4">
+                            <a class="nav-link" href="#">Mis Textos</a>
+                          </li>
+                        <li class="nav-item mr-4">
+                          <a class="nav-link" href="#">Mis Tallereos</a>
+                        </li>
+                        <li class="nav-item mr-4">
+                            <a class="nav-link" href="taller.html">Taller</a>
+                          </li>
+                      </ul>
+                      <form class="form-inline my-2 my-lg-0">
+                        <input id="buscarTexto" class="form-control mr-sm-2" type="search" placeholder="Buscar en mis textos" aria-label="Buscar en mis textos">
+                      </form>
+                    </div>
+                  </nav>
             </div>
         </div>
+        
+        <div class="row pt-2 pb-2">
+            <!-- semblanza del usuario -->
+            <div class="col-sm-3 p-0">
+                <div class="container-fluid">
+                    <div class="row pt-1 pb-2">
+                        <div class="col-sm-12 text-center">
+                            <i class="fas fa-user-tie h1 p-2 img-thumbnail rounded"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">                           
+                            <!-- <div class="main">
+                                <h1>Mostrando imagen almacenada en MySQL</h1>
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <img src='vista.php?id=4' alt='Img blob desde MySQL' width="600" />      
+                                    </div> 
+                                </div>
+                            </div>
+                            <form name="MiForm" id="MiForm" method="post" action="php/perfil/cargarImagen.php" enctype="multipart/form-data">
+                                <h4 class="text-center">Seleccione imagen a cargar</h4>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Archivos</label>
+                                    <div class="col-sm-8">
+                                    <input type="file" class="form-control" id="image" name="image" multiple>
+                                    </div>
+                                    <button name="submit" class="btn btn-primary">Cargar Imagen</button>
+                                </div>
+                            </form> -->
+                            
+                            <ul class="list-group list-group-flush datos-usuario">
+                                <li class="list-group-item">
+                                    <span id="usuario" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
+                                    <div class="input-group input-group-sm datos-usuario-editar">
+                                        <input type="text" class="form-control" aria-label="Sizing example input" id="UsuarioEditar">
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <span id="nombre" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
+                                    <div class="input-group input-group-sm datos-usuario-editar">
+                                        <input type="text" class="form-control" aria-label="Sizing example input" id="nombreUsuarioEditar">
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <span id="apellido" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
+                                    <div class="input-group input-group-sm datos-usuario-editar">
+                                        <input type="text" class="form-control" aria-label="Sizing example input" id="apellidoUsuarioEditar">
+                                    </div>
+                                </li>
+                                <!-- <li class="list-group-item">
+                                    <div class="input-group input-group-sm mb-3 datos-usuario-editar">
+                                        <input type="text" class="form-control" aria-label="Sizing example input" id="passwordUsuarioEditar" placeholder="Editar contraseña">
+                                    </div>
+                                </li> -->
+                                <li class="list-group-item">
+                                    <a href="#" id="editarDatosUsuario" class="m-2 datos-usuario-lectura">
+                                        <small>Editar datos</small>
+                                    </a>
+                                    <a href="#" id="cancelarEditarUsuario" class="text-danger m-2 datos-usuario-editar">
+                                        <small>Cancelar</small>
+                                    </a>
+                                    <a href="#" id="guardarEditarUsuario" class="text-success m-2 datos-usuario-editar">
+                                        <small>Guardar</small>
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                            <!-- <input type="text" id="usuario" class="mt-2 mb-2">
+                            <input type="text" id="nombre" class="mt-2 mb-2">
+                            <input type="text" id="apellido" class="mt-2 mb-2"> -->
+
+                            <!-- <button type="button" id="editarDatosUsuario" class="btn btn-primary mt-2 mb-2">
+                                <i class="fas fa-pen"></i>
+                            </button> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 p-0">
+                <div class="container-fluid">
+                    <div class="row pt-1 pb-2">
+                        <div class="col-sm-12">
+                            <table id="tblTextos" class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">T&iacute;tulo</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- modal -->
         <div class="modal fade" id="modalNuevoTexto" tabindex="-1" role="dialog" aria-labelledby="modalNuevoTextoTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -72,16 +169,97 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
                     <button type="button" class="btn btn-success" id="btnCrearTexto">Crear</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- modal borrar -->
+        <div class="modal fade" id="modalBorrarTexto" tabindex="-1" role="dialog" aria-labelledby="modalBorrarTextoTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modalBorrarTextoTitle">Eliminar texto</h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <p class="text-muted text-center">
+                                Estas a punto de borrar el texto llamado <br>
+                                <span id="lblTituloBorrar" class="text-uppercase text-danger mt-3 mb-3"></span><br>
+                                Seguro de que deseas continuar?
+                            </p>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btnBorrarTexto">Borrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal taller -->
+        <div class="modal fade" id="modalTaller" tabindex="-1" role="dialog" aria-labelledby="modalTallerTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modalTallerTitle">Enviar texto al taller</h5>
+                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <p class="text-center">
+                                <i class="fas fa-envelope h1"></i>
+                            </p>
+                            <p class="text-muted text-center">
+                                Estas a punto de enviar tu texto <br>
+                                <span id="lblTituloTaller" class="text-uppercase text-success mt-3 mb-3"></span><br>
+                                al taller literario, recuerda que podras interactuar con los demas usuarios, quienes te apoyaran <br>
+                                para enriquecer tu texto.
+                            </p>
+                            <p class="text-muted text-center">
+                                deseas continuar?
+                            </p>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btnEnviarTaller">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal loader -->
+        <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="text-center">
+                        <div class="lds-roller">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/constantesPerfil.js?v=12"></script>
-    <script src="js/perfil.js?v=12"></script>
+    <script src="js/constantesPerfil.js?v=9999999999999999999"></script>
+    <script src="js/perfil.js?v=999999999999999999"></script>
 </body>
 </html>

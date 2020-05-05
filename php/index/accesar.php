@@ -47,30 +47,34 @@ function cifrar($texto, $id, $rep){
     $reemplazar = texto.replace(/\n/g, " ");
     $data = reemplazar.split("");
     $largo = abecedario.length - 1;
-    if(id === undefined || id == 0){ 
-        id = Math.floor((Math.random() + 1) * 7);
+    if($id === undefined || $id == 0){ 
+        $id = Math.floor((Math.random() + 1) * 7);
     }
-    if(rep === undefined || rep == 0) {
-        rep = Math.floor((Math.random() + 1) * 7);
+    if($rep === undefined || $rep == 0) {
+        $rep = Math.floor((Math.random() + 1) * 7);
     }
     console.log("tu identificador es: ", id);
     console.log("tu repetidor es: ", rep);
-        for($d = 0; d < data.length; d++){
-            $index = abecedario.indexOf(data[d]);
-            $idx = index + id;
-            if(index > -1){
-                if(idx > largo){
-                    idx = idx - largo;
+        for($d = 0; $d < $data.length; $d++){
+            $index = abecedario.indexOf($data[$d]);
+            $idx = $index + $id;
+            if($index > -1){
+                if($idx > $largo){
+                    $idx = $idx - $largo;
                 }
-                if(idx < 0){
-                    idx = largo + idx;
+                if($idx < 0){
+                    $idx = $largo + $idx;
                 }
             }else{
-                console.log("fuera de rango -->", data[d]);
+                console.log("fuera de rango -->", $data[$d]);
             }
-            result += abecedario[idx];
+            $result += $abecedario[$idx];
         }
-    return mezclar(result, rep);
+    //return mezclar(result, rep);
+    
+    for($r = 0; $r < $rep; $r++){
+        $result = btoa($result);
+    }
 }
 
 function mezclar($texto, $rep){

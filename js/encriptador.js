@@ -7,7 +7,7 @@ id - es un numero identificador dado por el usuario, sirve para que al momento d
      usuario agrega el id 2, se sumara ese numero al index dando como resultado 4, lo que traera la letra "e" de esta manera el texto 
      sera ilegible y queda por parte del usuario asignar este id), si el usuario no asigna un numero, nosotros se lo aignamos de
      manera aleatoria, y al final se lo indicamos.
-rep - numero de veces que se cifrara el texto, una vez mezcaldo el texto, se procede a cifrarlo la cantidad de veces que el usuario haya
+rep - numero de veces que se cifrara el texto, una vez mezclado el texto, se procede a cifrarlo la cantidad de veces que el usuario haya
       indicado, si el usuario no lo indica, nosotros se lo asignamos al azar y se lo notificamos.
 */
 

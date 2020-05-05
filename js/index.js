@@ -160,3 +160,7 @@ $("#crearUsuario").click(function(){
 $("#ingresar").click(function(){
     validarCredenciales();
 });
+
+$("a").click(function(evt){
+    evt.preventDefault();
+});

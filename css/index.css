@@ -1,0 +1,33 @@
+/* importar fuentes */
+@font-face {
+    font-family:"Baloo";
+    src: url("../resources/fonts/Baloo_Thambi_2/BalooThambi2-Regular.ttf");
+  }
+  .turquesa{
+    background: #1786BC;
+  }
+  .morado{
+    background: #8032C4;
+  }
+.wood{
+  background-image:url("../resources/texturas/wood_1.png");
+}
+.darkness{
+  background-image:url("../resources/texturas/darkness.png");
+}
+.retina-wood{
+  background-image:url("../resources/texturas/retina_wood.png");
+}
+.menu{
+  border-bottom: 1px solid transparent;
+  opacity: 0.7;
+}
+.menu:hover{
+opacity: 1;
+}
+.baloo{
+font-family: "Baloo";
+}
+.i-index{
+ font-size: 60px;   
+}

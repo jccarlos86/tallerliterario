@@ -1,8 +1,7 @@
 <?php
 include '../conexion.php';
-$idperfil = $_POST['idperfil'];
 
-$query = "SELECT DISTINCT(tituloTexto), idTexto FROM TextosUsuarios WHERE perfilId = '$idperfil' ORDER BY tituloTexto";
+$query = "SELECT DISTINCT(tituloTexto), idTexto FROM TextosUsuarios WHERE estatus = '1' ORDER BY tituloTexto";
 
 $sel = $con ->query($query);
 if($sel){

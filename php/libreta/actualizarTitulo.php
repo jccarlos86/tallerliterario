@@ -5,7 +5,8 @@ $titulo = $_POST['titulo'];
 $perfil = $_POST['idperfil'];
 
 $result;
-$sel = "SELECT DISTINCT(tituloTexto) FROM TextosUsuarios WHERE perfilId = '$perfil' AND tituloTexto = '$titulo'";
+$query = "SELECT DISTINCT(tituloTexto) FROM TextosUsuarios WHERE perfilId = '$perfil' AND tituloTexto = '$titulo'";
+$sel = $con ->query($query);
 if($sel){
     $row_cnt = $sel->num_rows;
     if($row_cnt > 0) {
