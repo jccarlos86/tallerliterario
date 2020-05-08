@@ -1,0 +1,10 @@
+/* fondos */
+.wood{
+    background-image:url("../resources/texturas/wood_1.png");
+  }
+  .tileable-wood{
+    background-image:url("../resources/texturas/tileable_wood_texture.png");
+  }
+  .sun-pattern{
+    background-image:url("../resources/texturas/sun-pattern.png");
+  }

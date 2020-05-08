@@ -1,0 +1,24 @@
+/* inicio de importar fuentes */
+@font-face {
+    font-family:"Gotu" ;
+    src: url("../resources/fonts/Gotu/Gotu-Regular.ttf");
+  }
+  @font-face {
+    font-family:"Baloo";
+    src: url("../resources/fonts/Baloo_Thambi_2/BalooThambi2-Regular.ttf");
+  }
+  @font-face {
+    font-family:"Poppins" ;
+    src: url("../resources/fonts/Poppins/Poppins-Regular.ttf");
+  }
+  
+  /* fuentes */
+  .poppins{
+    font-family: "Poppins";
+  }
+  .gotu{
+    font-family: "Gotu";
+  }
+  .baloo{
+    font-family: "Baloo";
+  }

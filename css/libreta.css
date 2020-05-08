@@ -3,7 +3,6 @@ body{
 }
 .libreta{
     height: 400px;
-    max-height: 400px;
     min-height: 300px;
 }
 

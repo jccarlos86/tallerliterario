@@ -1,24 +1,8 @@
-$(document).ready(function(){
-    //validar mayusculas y minusculas
-    jQuery.expr[':'].Contains = function(a, i, m) {
-        return jQuery(a).text().toUpperCase()
-        .indexOf(m[3].toUpperCase()) >= 0;
-    };
-    $(".datos-texto-editar").hide();
-    var result = parametrosUrl();
-    datosTexto.ti = result.ti;
-    datosTexto.upi = result.upi;
-    datosTexto.ttl = unescape(result.ttx);
-    $("#volver").attr("href", "perfil.html?upi=" + datosTexto.upi);
-    $("#titulo").html(datosTexto.ttl);
-    obtenerTexto();
-});
-
 //------------------>FUNCIONES
 //se recibe el tiempo en minutos
 function autoGuardar(tiempo){
-    if(timer.timerId > -1){
-        limpiarAutoGuardar(timer.timerId);
+    if(sesion.timer.timerId > -1){
+        limpiarAutoGuardar(sesion.timer.timerId);
     }
     //calcular tiempo en milisegundos 60000 = 1 min
     var mili = parseInt(tiempo) * 60000;
@@ -26,7 +10,7 @@ function autoGuardar(tiempo){
         $("#guardarTexto").click();
         fechaUltimaVezGuardado();
     }, mili);
-    timer.timerId = timeId;
+    sesion.timer.timerId = timeId;
 }
 
 function limpiarAutoGuardar(id){
@@ -42,8 +26,8 @@ function fechaUltimaVezGuardado(){
 function obtenerTexto(){
     $.ajax({
         data: {
-            idTexto: datosTexto.ti,
-            perfil: datosTexto.upi
+            idTexto: sesion.escrito.id,
+            perfil: sesion.usuario.perfil
         },
         url:   '../php/libreta/obtenerTexto.php',
         type:  'post',
@@ -58,7 +42,7 @@ function obtenerTexto(){
                 case response != "null":
                     var data = JSON.parse(response);
                     console.log(data);
-                    datosTexto.lt = data.length;
+                    sesion.escrito.cantidadfilas = data.length;
                     insertarTexto(data);
                     break;   
             }
@@ -74,18 +58,11 @@ function insertarTexto(texto){
         }else{
             escrito += unescape(texto[t].Texto) + "\n";
         }
-        datosTexto.tx.push(unescape(texto[t].Texto));
+        sesion.escrito.texto.push(unescape(texto[t].Texto));
     }
     $("#hojaTexto").val(escrito);
     $("#hojaTexto").focus();
-}
-
-function parametrosUrl(){
-    var result = {};
-    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        result[key] = value;
-    });
-    return result;
+    loader(false);
 }
 
 function seccionarTexto(){
@@ -101,47 +78,47 @@ function seccionarTexto(){
         crear: []
     };
     switch(true){
-        case nuevoTexto.length == datosTexto.lt:
+        case nuevoTexto.length == sesion.escrito.cantidadfilas:
             for(var a = 0; a < nuevoTexto.length; a++){
-                if(nuevoTexto[a] != datosTexto.tx[a]){
+                if(nuevoTexto[a] != sesion.escrito.texto[a]){
                     result.upd.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                    datosTexto.tx[a] = nuevoTexto[a];
+                    sesion.escrito.texto[a] = nuevoTexto[a];
                     actualizarTexto(a, escape(nuevoTexto[a]));
                 }
             }
             break;
-        case nuevoTexto.length > datosTexto.lt:
+        case nuevoTexto.length > sesion.escrito.cantidadfilas:
             //lo nuevo es mayor que lo viejo, quiere decir que inserto texto.
             for(var a = 0; a < nuevoTexto.length; a++){
                 //si es undefined, quiere decir que son renglones nuevos.
-                if(datosTexto.tx[a] != undefined){
+                if(sesion.escrito.texto[a] != undefined){
                     //comparar si coinciden el texto nuevo con el antiguo, sino se actualiza
-                    if(nuevoTexto[a] != datosTexto.tx[a]){
+                    if(nuevoTexto[a] != sesion.escrito.texto[a]){
                         result.upd.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                        datosTexto.tx[a] = nuevoTexto[a];
+                        sesion.escrito.texto[a] = nuevoTexto[a];
                         actualizarTexto(a, escape(nuevoTexto[a]));
                     }
                 }else{
                     result.crear.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                    datosTexto.tx.push(nuevoTexto[a]);
+                    sesion.escrito.texto.push(nuevoTexto[a]);
                     crearTexto(a, escape(nuevoTexto[a]));
                 }
             }
             break;
-        case nuevoTexto.length < datosTexto.lt:
+        case nuevoTexto.length < sesion.escrito.cantidadfilas:
             //lo nuevo es menor que lo viejo, quiere decir que borro texto.
-            for(var a = 0; a < datosTexto.lt; a++){
+            for(var a = 0; a < sesion.escrito.cantidadfilas; a++){
                 //si es undefined, quiere decir que esos renglones ya no existen, se eliminan.
                 if(nuevoTexto[a] != undefined){
                     //comparar si coinciden el texto nuevo con el antiguo, sino se actualiza.
-                    if(datosTexto.tx[a] != nuevoTexto[a]){
+                    if(sesion.escrito.texto[a] != nuevoTexto[a]){
                         result.upd.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                        datosTexto.tx[a] = nuevoTexto[a];
+                        sesion.escrito.texto[a] = nuevoTexto[a];
                         actualizarTexto(a, escape(nuevoTexto[a]));
                     }
                 }else{
-                    result.del.push({'index': a, 'texto': escape(datosTexto.tx[a])});
-                    datosTexto.tx.splice(a, 1);
+                    result.del.push({'index': a, 'texto': escape(sesion.escrito.texto[a])});
+                    sesion.escrito.texto.splice(a, 1);
                     borrarTexto(a, escape(nuevoTexto[a]));
                 }
             }
@@ -159,9 +136,9 @@ function actualizarTexto(index, texto){
         data: {
             idx: index,
             txt: texto,
-            idTexto: datosTexto.ti,
-            perfil: datosTexto.upi,
-            titulo: escape(datosTexto.ttl)
+            idTexto: sesion.escrito.id,
+            perfil: sesion.usuario.perfil,
+            titulo: sesion.escrito.titulo
         },
         url:   '../php/libreta/actualizar.php',
         type:  'post',
@@ -175,12 +152,12 @@ function actualizarTexto(index, texto){
     });
 }
 
-function borrarTexto(index, texto){
+function borrarTexto(index){
     $.ajax({
         data: {
             idx: index,
-            idTexto: datosTexto.ti,
-            perfil: datosTexto.upi
+            idTexto: getCookie('textoid'),
+            perfil: getCookie('perfilId')
         },
         url:   '../php/libreta/borrar.php',
         type:  'post',
@@ -199,9 +176,9 @@ function crearTexto(index, texto){
         data: {
              idx: index,
             txt: texto,
-            idTexto: datosTexto.ti,
-            perfil: datosTexto.upi,
-            titulo: escape(datosTexto.ttl)
+            idTexto: sesion.escrito.id,
+            perfil: sesion.usuario.perfil,
+            titulo:sesion.escrito.titulo
         },
         url:   '../php/libreta/crear.php',
         type:  'post',
@@ -219,8 +196,8 @@ function actualizarTitulo(){
     var tit = $("#tituloEditar").val();
     $.ajax({
         data: {
-            idperfil: datosTexto.upi,
-            idtexto: datosTexto.ti,
+            idperfil: sesion.usuario.perfil,
+            idtexto: sesion.escrito.id,
             titulo: escape(tit),
         },
         url:   '../php/libreta/actualizarTitulo.php',
@@ -231,16 +208,18 @@ function actualizarTitulo(){
         success: function (response) {
             switch(true){
                 case response == "true":
+                    removeCookie("titulo");
+                    crearCookie("titulo", tit);
+                    sesion.escrito.titulo = tit;
                     $("#titulo").html(tit);
-                    datosTexto.ttl = tit;
+                    mostrarEditar(false);
                     alert("Titulo actualizado correctamente.");
                     break;
                 case response == "Duplicado":
                     alert("Ese titulo ya se encuentra asignado a otro texto.");
-                    $("#titulo").html(datosTexto.ttl);
+                    $("#titulo").html(sesion.escrito.titulo);
                     break;
                 case response.startsWith("Connection"):
-                    datosTexto.ttl = tit;
                     console.log("Error: " + response);
                     break;
             }
@@ -257,30 +236,30 @@ function verDiferencias(){
         crear: []
     };
     switch(true){
-        case nuevoTexto.length == datosTexto.lt:
+        case nuevoTexto.length == sesion.escrito.cantidadfilas:
             for(var a = 0; a < nuevoTexto.length; a++){
-                if(nuevoTexto[a] != datosTexto.tx[a]){
+                if(nuevoTexto[a] != sesion.escrito.texto[a]){
                     result.upd.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + datosTexto.tx[a] + '</button>');
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + sesion.escrito.texto[a] + '</button>');
                     $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + nuevoTexto[a] + '</button>');
                 }else{
-                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + datosTexto.tx[a] + '</button>');
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + sesion.escrito.texto[a] + '</button>');
                     $("#actual").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + nuevoTexto[a] + '</button>');
                 }
             }
             break;
-        case nuevoTexto.length > datosTexto.lt:
+        case nuevoTexto.length > sesion.escrito.cantidadfilas:
             //lo nuevo es mayor que lo viejo, quiere decir que inserto texto.
             for(var a = 0; a < nuevoTexto.length; a++){
                 //si es undefined, quiere decir que son renglones nuevos.
-                if(datosTexto.tx[a] != undefined){
+                if(sesion.escrito.texto[a] != undefined){
                     //comparar si coinciden el texto nuevo con el antiguo, sino se actualiza
-                    if(nuevoTexto[a] != datosTexto.tx[a]){
+                    if(nuevoTexto[a] != sesion.escrito.texto[a]){
                         result.upd.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + datosTexto.tx[a] + '</button>');
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + sesion.escrito.texto[a] + '</button>');
                         $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + nuevoTexto[a] + '</button>');
                     }else{
-                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + datosTexto.tx[a] + '</button>');
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + sesion.escrito.texto[a] + '</button>');
                         $("#actual").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + nuevoTexto[a] + '</button>');
                     }
                 }else{
@@ -290,23 +269,23 @@ function verDiferencias(){
                 }
             }
             break;
-        case nuevoTexto.length < datosTexto.lt:
+        case nuevoTexto.length < sesion.escrito.cantidadfilas:
             //lo nuevo es menor que lo viejo, quiere decir que borro texto.
-            for(var a = 0; a < datosTexto.lt; a++){
+            for(var a = 0; a < sesion.escrito.cantidadfilas; a++){
                 //si es undefined, quiere decir que esos renglones ya no existen, se eliminan.
                 if(nuevoTexto[a] != undefined){
                     //comparar si coinciden el texto nuevo con el antiguo, sino se actualiza.
-                    if(datosTexto.tx[a] != nuevoTexto[a]){
+                    if(sesion.escrito.texto[a] != nuevoTexto[a]){
                         result.upd.push({'index': a, 'texto': escape(nuevoTexto[a])});
-                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + datosTexto.tx[a] + '</button>');
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + sesion.escrito.texto[a] + '</button>');
                         $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + nuevoTexto[a] + '</button>');
                     }else{
-                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + datosTexto.tx[a] + '</button>');
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + sesion.escrito.texto[a] + '</button>');
                         $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + nuevoTexto[a] + '</button>');
                     }
                 }else{
-                    result.del.push({'index': a, 'texto': escape(datosTexto.tx[a])});
-                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action text-danger del-compare">' + datosTexto.tx[a] + '</button>');
+                    result.del.push({'index': a, 'texto': escape(sesion.escrito.texto[a])});
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action text-danger del-compare">' + sesion.escrito.texto[a] + '</button>');
                     $("#actual").append('<button type="button" class="list-group-item list-group-item-action del-compare">&nbsp;</button>');
                 }
             }
@@ -333,18 +312,15 @@ function mostrarEditar(mostrar){
 }
 
 function detenerAutoGuardar(){
-    if(timer.timerId > -1){
-        limpiarAutoGuardar(timer.timerId);
+    if(sesion.timer.timerId > -1){
+        limpiarAutoGuardar(sesion.timer.timerId);
         timer.timeId = -1;
     }
-    // else{
-    //     alert("aun no has configurado un tiempo de guardado automatico");
-    // }
     $("#selectMinutos").val("");
 }
 
 function compararUltimaVersion(){
-    if(timer.timerId > -1){
+    if(sesion.timer.timerId > -1){
         alert("Debes detener el guardado automatico para poder realizar la comparacion.");
     }else{
         $("#modalComparar").modal("show");
@@ -352,7 +328,21 @@ function compararUltimaVersion(){
     }
 }
 
-//------>triggers
+//------------------->triggers
+$(document).ready(function(){
+    loader(true);
+    if(checkCookie("perfilId") && checkCookie("textoid") && checkCookie("titulo")){
+        $(".datos-texto-editar").hide();
+        sesion.usuario.perfil = getCookie("perfilId");
+        sesion.escrito.id = getCookie("textoid");
+        sesion.escrito.titulo = unescape(getCookie("titulo"));
+        $("#titulo").html(sesion.escrito.titulo);
+        obtenerTexto();
+    }else{
+        window.location.href = "index.html";
+    }
+});
+
 $("#guardarTexto").click(function(){
     seccionarTexto();
 });
@@ -381,6 +371,6 @@ $("#cancelarEditarTitulo").click(function(){
     mostrarEditar(false);
 });
 
-$("a").click(function(evt){
-    evt.preventDefault();
+$("#volver").click(function(){
+    window.location.href = "perfil.html";
 });

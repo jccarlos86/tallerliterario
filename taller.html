@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/fontAwesome/all.min.css">
     <link rel="stylesheet" href="resources/animateCSS/animate.css">
+    <link rel="stylesheet" href="css/loader.css?v=999999999999999999">
+    <link rel="stylesheet" href="css/fuentes.css?v=999999999999999999999">
     <title>Taller</title>
 </head>
-<body class="bg-light">
+<body class="bg-light baloo">
     <div class="container-fluid">
         <!-- menu taller -->
         <div class="row pt-3 pb-3">
@@ -21,13 +23,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="index.html">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link prevent-default" href="#">Entradas recientes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link prevent-default" href="#">M&aacute;s vistas</a>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -41,15 +43,33 @@
         <!-- textos -->
         <div class="row">
             <div class="col-sm-12">
-                <div id="cardTextos" class="card-columns">
-                    
-                </div> 
+                <div id="cardTextos" class="card-columns"></div> 
+            </div>
+        </div>
+        <!-- modal loader -->
+        <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="text-center">
+                        <div class="lds-roller">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/constantes.js?v=9999999999999999999999"></script>
     <script src="js/taller.js"></script>
 </body>
 </html>

@@ -98,7 +98,10 @@ function crearUsuario(email, password, perfilId){
                     $("#modalRegistro").modal("hide");
                     alert("Usuario creado exitosamente.");
                     setTimeout(() => {
-                        window.location.href="perfil.html?upi=" + perfilId;
+                        //sesion.usuario.perfilid = perfilId;
+                        crearCookie("perfilId", perfilId);
+                        //window.location.href="perfil.html?upi=" + perfilId;
+                        window.location.href="perfil.html";
                     }, 1500);
                 break;
                 case response.startsWith("Formato"):
@@ -145,7 +148,8 @@ function accesoUsuario(mail, pass){
                     alert("No se encontraron registros.");
                 break;
                 default: 
-                    window.location.href="perfil.html?upi=" + response;
+                    crearCookie("perfilId", response);
+                    window.location.href="perfil.html";
                 break;
             }
         }
@@ -153,14 +157,14 @@ function accesoUsuario(mail, pass){
 }
 
 //-------->triggers
+$(document).ready(function(){
+    //if(checkCookie("perfilId")) window.location.href = "perfil.html";
+});
+
 $("#crearUsuario").click(function(){
     validarPassword();
 });
 
 $("#ingresar").click(function(){
     validarCredenciales();
-});
-
-$("a").click(function(evt){
-    evt.preventDefault();
 });

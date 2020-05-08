@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/fontAwesome/all.min.css">
-    <link rel="stylesheet" href="resources/animateCSS/animate.css?v=9999999999999999999">
-    <link rel="stylesheet" href="css/loader.css?v=9999999999999999999">
+    <link rel="stylesheet" href="resources/animateCSS/animate.css?v=99999999999999999">
+    <link rel="stylesheet" href="css/loader.css?v=999999999999999999">
+    <link rel="stylesheet" href="css/fuentes.css?v=999999999999999999999">
     <title>Perfil</title>
 </head>
-<body>
-    <div class="container bg-light">
+<body class="bg-light baloo">
+    <div class="container-fluid">
         <!-- menu de opciones -->
         <div class="row pb-3">
             <div class="col-sm-12 p-0">
@@ -19,27 +20,71 @@
                       <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav mr-auto">
-                        <li class="nav-item mr-4">
-                            <button type="button" class="btn btn-outline-success rounded-circle" data-toggle="modal" data-target="#modalNuevoTexto" >
-                                <i class="fas fa-feather-alt"></i>
-                            </button>
-                        </li>
-                        <li class="nav-item mr-4">
-                            <a class="nav-link" href="#">Mis Textos</a>
-                          </li>
-                        <li class="nav-item mr-4">
-                          <a class="nav-link" href="#">Mis Tallereos</a>
-                        </li>
-                        <li class="nav-item mr-4">
-                            <a class="nav-link" href="taller.html">Taller</a>
-                          </li>
-                      </ul>
-                      <form class="form-inline my-2 my-lg-0">
-                        <input id="buscarTexto" class="form-control mr-sm-2" type="search" placeholder="Buscar en mis textos" aria-label="Buscar en mis textos">
-                      </form>
+                        <ul class="navbar-nav mr-auto">
+                            <!-- <li class="nav-item dropdown mr-4">
+                                <a class="nav-link p-0 prevent-default" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user-circle h1 text-primary"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <ul class="list-group list-group-flush datos-usuario">
+                                        <li class="list-group-item">
+                                            <span id="usuario" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
+                                            <div class="input-group input-group-sm datos-usuario-editar">
+                                                <input type="text" class="form-control" aria-label="Sizing example input" id="UsuarioEditar">
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span id="nombre" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
+                                            <div class="input-group input-group-sm datos-usuario-editar">
+                                                <input type="text" class="form-control" aria-label="Sizing example input" id="nombreUsuarioEditar">
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span id="apellido" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
+                                            <div class="input-group input-group-sm datos-usuario-editar">
+                                                <input type="text" class="form-control" aria-label="Sizing example input" id="apellidoUsuarioEditar">
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="#" id="editarDatosUsuario" class="m-2 datos-usuario-lectura prevent-default">
+                                                <small>Editar datos</small>
+                                            </a>
+                                            <a href="#" id="cancelarEditarUsuario" class="text-danger m-2 datos-usuario-editar prevent-default">
+                                                <small>Cancelar</small>
+                                            </a>
+                                            <a href="#" id="guardarEditarUsuario" class="text-success m-2 datos-usuario-editar prevent-default">
+                                                <small>Guardar</small>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="" class="text-danger prevent-default">
+                                                <i class="fas fa-power-off text-danger"></i>
+                                                <span>Salir</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <li class="nav-item mr-4">
+                                <button type="button" class="btn btn-outline-success rounded-circle" data-toggle="modal" data-target="#modalNuevoTexto" >
+                                    <i class="fas fa-feather-alt"></i>
+                                </button>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a class="nav-link prevent-default" href="#">Mis Textos</a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a class="nav-link prevent-default" href="#">Tallereo</a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a class="nav-link" href="taller.html">Taller</a>
+                            </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input id="buscarTexto" class="form-control mr-sm-2" type="search" placeholder="Buscar en mis textos" aria-label="Buscar en mis textos">
+                        </form>
                     </div>
-                  </nav>
+                </nav>
             </div>
         </div>
         
@@ -98,26 +143,17 @@
                                     </div>
                                 </li> -->
                                 <li class="list-group-item">
-                                    <a href="#" id="editarDatosUsuario" class="m-2 datos-usuario-lectura">
+                                    <a href="#" id="editarDatosUsuario" class="m-2 datos-usuario-lectura prevent-default">
                                         <small>Editar datos</small>
                                     </a>
-                                    <a href="#" id="cancelarEditarUsuario" class="text-danger m-2 datos-usuario-editar">
+                                    <a href="#" id="cancelarEditarUsuario" class="text-danger m-2 datos-usuario-editar prevent-default">
                                         <small>Cancelar</small>
                                     </a>
-                                    <a href="#" id="guardarEditarUsuario" class="text-success m-2 datos-usuario-editar">
+                                    <a href="#" id="guardarEditarUsuario" class="text-success m-2 datos-usuario-editar prevent-default">
                                         <small>Guardar</small>
                                     </a>
                                 </li>
                             </ul>
-                            
-                            <!-- <input type="text" id="usuario" class="mt-2 mb-2">
-                            <input type="text" id="nombre" class="mt-2 mb-2">
-                            <input type="text" id="apellido" class="mt-2 mb-2"> -->
-
-                            <!-- <button type="button" id="editarDatosUsuario" class="btn btn-primary mt-2 mb-2">
-                                <i class="fas fa-pen"></i>
-                            </button> -->
-
                         </div>
                     </div>
                 </div>
@@ -160,11 +196,15 @@
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="tituloTexto" aria-describedby="basic-addon3" placeholder="Escribe un titulo para tu texto">
                             </div>
+                            <label for="tituloTexto">Genero del texto</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="generoTexto" aria-describedby="basic-addon3" placeholder="Escribe un genero para tu texto">
+                            </div>
                             <div class="input-group mb-">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="irTexto">
                                     <label class="custom-control-label" for="irTexto">Ir al texto despu&eacute;s de crearlo.</label>
-                                  </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -253,13 +293,12 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/constantesPerfil.js?v=9999999999999999999"></script>
-    <script src="js/perfil.js?v=999999999999999999"></script>
+    <script src="js/constantes.js?v=9999999999999999999999"></script>
+    <script src="js/constantesPerfil.js?v=999999999999999999"></script>
+    <script src="js/perfil.js?v=99999999999999999"></script>
 </body>
 </html>
