@@ -58,7 +58,7 @@ function crearTexto(idTexto){
         data: {
             titulo: escape(titulo),
             idTexto: idTexto,
-            perfilid: getCookie("perfilId")
+            perfilid: sesion.usuario.perfil
         },
         url:   '../php/perfil/crearTexto.php',
         type:  'post',
@@ -107,7 +107,7 @@ function consultar(tp, ttl, idtx, idus){
 function cargarDatosUsuario(){
     $.ajax({
         data: {
-            idperfil: getCookie("perfilId")
+            idperfil: sesion.usuario.perfil
         },
         url:   '../php/perfil/datosUsuario.php',
         type:  'post',
@@ -118,23 +118,15 @@ function cargarDatosUsuario(){
             switch(true){
                 case response.startsWith("Connection"):
                     break;
-                // case response == null:
-                //     alert("aun no has creado textos.");
-                //     break;
                 case response != "null":
                     var data = JSON.parse(response);
                     console.log(data);
                     $("#usuario").html(unescape(data[0].Usuario));
                     $("#nombre").html(unescape(data[0].Nombre));
                     $("#apellido").html(unescape(data[0].Apellido));
-
                     sesion.usuario.nombre = unescape(data[0].Nombre);
                     sesion.usuario.usuario = unescape(data[0].Usuario);
                     sesion.usuario.apellido = unescape(data[0].Apellido);
-
-                    // datosUsuario.nombre = unescape(data[0].Nombre);
-                    // datosUsuario.usuario = unescape(data[0].Usuario);
-                    // datosUsuario.apellido = unescape(data[0].Apellido);
                     break;   
             }
         }
@@ -144,7 +136,7 @@ function cargarDatosUsuario(){
 function cargarTextos(){
     $.ajax({
         data: {
-            idperfil: getCookie("perfilId")
+            idperfil: sesion.usuario.perfil
         },
         url:   '../php/perfil/textosUsuario.php',
         type:  'post',
@@ -154,6 +146,7 @@ function cargarTextos(){
         success:  function (response) {
             switch(true){
                 case response.startsWith("Connection"):
+                    console.log("Error: " + response);
                     break;
                 case response == "null":
                     alert("aun no has creado textos.");
@@ -169,65 +162,48 @@ function cargarTextos(){
 }
 
 function crearTabla(data){
-    var rows = "";
+    var rowsPerfil = "";
+    var rowsTaller = "";
     for(var d = 0; d < data.length; d++){
-        rows += sesion.templates.tabla.fila.abrir;
-        rows += sesion.templates.tabla.columnas.opciones.abrir;
-        rows += "<a href='#' class='dropdown-item borrar-texto text-danger' data-toggle='modal' data-target='#modalBorrarTexto' data-ti='" + 
-        data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
-            "<i class='far fa-trash-alt text-danger'></i>"+
-            "  Eliminar"+
-        "</a>";
-        rows += "<a href='#' class='dropdown-item enviar-texto-taller text-primary' data-toggle='modal' data-target='#modalTaller' data-ti='" + 
-        data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
-            "<i class='fas fa-envelope-open-text text-primary'></i>"+
-            "  Taller"+
-        "</a>";
-        rows += sesion.templates.tabla.columnas.opciones.cerrar;
-        rows += sesion.templates.tabla.columnas.titulos.abrir;
-        rows += "<a class='texto-libreta' data-ti='" + data[d].ID + "' data-ttx='" + data[d].Titulo + "' href='#'>"+
-            "<span>" + unescape(data[d].Titulo) + "</span>"+
-        "</a>";
-        rows += sesion.templates.tabla.columnas.titulos.cerrar;
-        rows += sesion.templates.tabla.fila.cerrar;
-        /*
-        rows += "<tr>"+
-                    "<td>"+
-                        '<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">'+
-                            '<ul class="navbar-nav mr-auto">'+
-                                '<li class="nav-item dropdown">'+
-                                   ' <a class="nav-link p-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'+
-                                        '<i class="fas fa-cog"></i>'+
-                                    '</a>'+
-
-                                    '<div class="dropdown-menu" aria-labelledby="navbarDropdown">'+
-                                        "<a href='#' class='dropdown-item borrar-texto text-danger' data-toggle='modal' data-target='#modalBorrarTexto' data-ti='" + 
-                                        data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
-                                            "<i class='far fa-trash-alt text-danger'></i>"+
-                                            "  Eliminar"+
-                                        "</a>"+
-
-                                        "<a href='#' class='dropdown-item enviar-texto-taller text-primary' data-toggle='modal' data-target='#modalTaller' data-ti='" + 
-                                        data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
-                                            "<i class='fas fa-envelope-open-text text-primary'></i>"+
-                                            "  Taller"+
-                                        "</a>"+
-
-                                    '</div>'+
-                                '</li>'+
-
-                            '</ul>'+
-                        '</nav>'+
-                    "</td>"+        
-                    "<td class = 'titulos'>"+
-                        "<a class='texto-libreta' data-ti='" + data[d].ID + "' data-ttx='" + data[d].Titulo + "' href='#'>"+
-                            "<span>" + unescape(data[d].Titulo) + "</span>"+
-                        "</a>"+
-                    "</td>"+
-                "</tr>";
-                */
+        if(data[d].Estatus == 0){
+            rowsPerfil += sesion.templates.tablas.perfil
+            .replace("#textoid#", data[d].ID)
+            .replace("#textoid#", data[d].ID)
+            .replace("#textoid#", data[d].ID)
+            .replace("#version#", data[d].Version)
+            .replace("#titulotexto#", unescape(data[d].Titulo))
+            .replace("#titulotexto#", unescape(data[d].Titulo))
+            .replace("#titulotexto#", unescape(data[d].Titulo))
+            .replace("#titulotexto#", unescape(data[d].Titulo));
+        }else if(data[d].Estatus == 1){
+            rowsTaller += sesion.templates.tablas.taller
+            .replace("#textoid#", data[d].ID)
+            .replace("#titulotexto#", unescape(data[d].Titulo))
+            .replace("#titulotexto#", unescape(data[d].Titulo));
+        }
+        // rows += sesion.templates.tabla.fila.abrir;
+        // rows += sesion.templates.tabla.columnas.opciones.abrir;
+        // rows += "<a href='#' class='dropdown-item borrar-texto text-danger' data-toggle='modal' data-target='#modalBorrarTexto' data-ti='" + 
+        // data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
+        //     "<i class='far fa-trash-alt text-danger'></i>"+
+        //     "  Eliminar"+
+        // "</a>";
+        // rows += "<a href='#' class='dropdown-item enviar-texto-taller text-primary' data-toggle='modal' data-target='#modalTaller' data-ti='" + 
+        // data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
+        //     "<i class='fas fa-envelope-open-text text-primary'></i>"+
+        //     "  Taller"+
+        // "</a>";
+        // rows += sesion.templates.tabla.columnas.opciones.cerrar;
+        // rows += sesion.templates.tabla.columnas.titulos.abrir;
+        // rows += "<a class='texto-libreta' data-ti='" + data[d].ID + "' data-ttx='" + data[d].Titulo + "' href='#'>"+
+        //     "<span>" + unescape(data[d].Titulo) + "</span>"+
+        // "</a>";
+        // rows += sesion.templates.tabla.columnas.titulos.cerrar;
+        // rows += sesion.templates.tabla.fila.cerrar;
     }
-    $("#tblTextos tbody").html(rows);
+    $("#tblTextos tbody").html(rowsPerfil);
+    $("#tblTextosTaller tbody").html(rowsTaller);
+    //$("#tblTextosTaller").hide();
     alertaBorrar();
     alertaTaller();
     clickLibreta();
@@ -245,16 +221,16 @@ function alertaBorrar(){
 
 function alertaTaller(){
     $(".enviar-texto-taller").click(function(){
-        var id= $(this).data("ti");
-        var titulo = $(this).data("ttx");
-        $("#lblTituloTaller").html(titulo);
-        $("#btnEnviarTaller").attr("data-ti", id);
+        var opt = addOptionVersiones($(this).data("vrs"));
+        $("#selVerTaller").html(opt);
+        $("#lblTituloTaller").html( $(this).data("ttx"));
+        $("#btnEnviarTaller").attr("data-ti", $(this).data("ti"));
     });
 }
 
 function clickLibreta(){
     $(".texto-libreta").click(function(){
-        verEscrito($(this).data("ti"), $(this).data("ttx"));
+        verEscrito($(this).data("ti"), $(this).data("ttx"), $(this).data("tipo"));
     });
 }
 
@@ -264,7 +240,7 @@ function actualizarDatosUsuario(){
     var apellido = $("#apellidoUsuarioEditar").val();
     $.ajax({
         data: {
-            idperfil: getCookie("perfilId"),
+            idperfil: sesion.usuario.perfil,
             usuario: escape(usr),
             nombre: escape(name),
             apellido: escape(apellido)
@@ -295,7 +271,7 @@ function borrarTexto(idtx){
     $.ajax({
         data: {
             id: idtx,
-            perfil: getCookie("perfilId")
+            perfil: sesion.usuario.perfil
         },
         url:   '../php/perfil/eliminarTexto.php',
         type:  'post',
@@ -353,7 +329,8 @@ function enviarTextoTaller(idtx){
     $.ajax({
         data: {
             id: idtx,
-            perfil: getCookie("perfilId")
+            perfil: sesion.usuario.perfil,
+            version: $("#selVerTaller").val()
         },
         url:   '../php/perfil/EnviarTextoTaller.php',
         type:  'post',
@@ -367,7 +344,7 @@ function enviarTextoTaller(idtx){
                     loader(false);
                     console.log("Error: " + response);
                     break;
-                case response == "true":
+                case response.startsWith("true"):
                     window.location.reload();
                     break;   
             }
@@ -375,10 +352,15 @@ function enviarTextoTaller(idtx){
     });
 }
 
-function verEscrito(id, titulo){
+function verEscrito(id, titulo, tipo){
     crearCookie("textoid", id);
-    crearCookie("titulo", titulo);
-    window.location.href = "libreta.html";
+    //crearCookie("titulo", titulo);
+    if(tipo == 0){
+        window.location.href = "libreta.html";
+    }else if(tipo == 1){
+        crearCookie("autorid", sesion.usuario.perfil);
+        window.location.href = "escrito.html";
+    }
 }
 
 // function subirImagen(){
@@ -405,6 +387,7 @@ function verEscrito(id, titulo){
 $(document).ready(function(){
     //loader(true);
     if(checkCookie("perfilId")){
+        sesion.usuario.perfil = getCookie("perfilId");
         editarDatosUsuario(false);
         cargarDatosUsuario();
         cargarTextos();

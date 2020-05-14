@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/fontAwesome/all.min.css">
+    <link rel="stylesheet" href="css/fuentes.css?v=999999999999999999999">
+    <link rel="stylesheet" href="css/loader.css?v=9999999999999999999">
+    <title>Escrito</title>
+</head>
+<body class="baloo bg-light">
+    <div class="container">
+        <!-- menu -->
+        <div class="row pt-2 pb-4">
+            <div class="col-sm-12">
+                <ul class="nav">
+                    <li class="nav-item p-2">
+                        <a id="volver" href="taller.html" class="nav-link">
+                            <i class="fas fa-arrow-left h3"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a href="#" id="nocturno" class="prevent-default">
+                            <i class="fas fa-moon h3"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a href="#" id="diurno" class="prevent-default">
+                            <i class="fas fa-sun h3"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- escrito -->
+        <div class="row pt-2">
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    <div class="lectura text-secondary">
+                        <h5 id="titulo" class="card-title"></h5>
+                        <p id="texto" class="card-text"></p>
+                        <p class="card-text">
+                            <small id="autor"></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- contador reconociminetos -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav">
+                    <li class="nav-item p-2">
+                        <a id="reconocimiento" href="#" class="prevent-default reaccion" data-tipo="2">
+                            <i class="fas fa-medal h5"></i>
+                            <span id="cntReconocimiento"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a id="likes" href="#" class="prevent-default reaccion" data-tipo="0">
+                            <i class="far fa-thumbs-up h5"></i>
+                            <span id="cntLikes"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a id="dislikes" href="#" class="prevent-default reaccion" data-tipo="1">
+                            <i class="far fa-thumbs-down h5"></i>
+                            <span id="cntDislikes"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- comentarios -->
+        <div class="row pt-3 pb-3">
+            <div id="userComments" class="col-sm-12"></div>
+        </div>
+        <!-- nuevo comentario -->
+        <div class="row">
+            <div class="col-sm-12">
+                <form>
+                    <div class="form-group">
+                        <label for="comentario" class="col-form-label">Escribe un comentario:</label>
+                        <textarea class="form-control" id="comentario"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button id="comentar" type="button" class="btn btn-outline-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+     <!-- modal loader -->
+     <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-transparent border-0">
+                <div class="text-center">
+                    <div class="lds-roller">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="resources/jquery/jquery-3.2.1.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/constantes.js?v=99999999999999999999999"></script>
+    <script src="js/escrito.js?v=999999999999999999999999"></script>
+</body>
+</html>

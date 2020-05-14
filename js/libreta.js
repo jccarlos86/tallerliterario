@@ -43,14 +43,17 @@ function obtenerTexto(){
                     var data = JSON.parse(response);
                     console.log(data);
                     sesion.escrito.cantidadfilas = data.length;
+                    sesion.escrito.version = data[0].Version;
+                    sesion.escrito.titulo = unescape(data[0].Titulo);
                     insertarTexto(data);
-                    break;   
+                    break;
             }
         }
     });
 }
 
 function insertarTexto(texto){
+    $("#titulo").html(sesion.escrito.titulo);
     var escrito = "";
     for(var t = 0; t < texto.length; t++){
         if(t == texto.length - 1){
@@ -60,10 +63,14 @@ function insertarTexto(texto){
         }
         sesion.escrito.texto.push(unescape(texto[t].Texto));
     }
+    agregarversiones();
+    //$("#versionTexto").html("Versión: "+ sesion.escrito.version);
     $("#hojaTexto").val(escrito);
     $("#hojaTexto").focus();
     loader(false);
 }
+
+
 
 function seccionarTexto(){
     /**
@@ -156,8 +163,8 @@ function borrarTexto(index){
     $.ajax({
         data: {
             idx: index,
-            idTexto: getCookie('textoid'),
-            perfil: getCookie('perfilId')
+            idTexto: sesion.escrito,id,
+            perfil: sesion.usuario.perfil
         },
         url:   '../php/libreta/borrar.php',
         type:  'post',
@@ -208,8 +215,6 @@ function actualizarTitulo(){
         success: function (response) {
             switch(true){
                 case response == "true":
-                    removeCookie("titulo");
-                    crearCookie("titulo", tit);
                     sesion.escrito.titulo = tit;
                     $("#titulo").html(tit);
                     mostrarEditar(false);
@@ -293,6 +298,8 @@ function verDiferencias(){
         default: break;
     }
     console.log(result);
+    $("#verA").html("Version anterior");
+    $("#verB").html("Version actual");
     $("#pillCreados").html(result.crear.length);
     $("#pillActualizados").html(result.upd.length);
     $("#pillEliminados").html(result.del.length);
@@ -319,6 +326,39 @@ function detenerAutoGuardar(){
     $("#selectMinutos").val("");
 }
 
+function versionSeleccionada(version){
+    $.ajax({
+        data: {
+            version: version,
+            perfil: sesion.usuario.perfil,
+            id: sesion.escrito.id
+        },
+        url:   '../php/libreta/versionSeleccionada.php',
+        type:  'post',
+        beforeSend: function () {
+            console.log("Obteniendo Version seleccionada...");
+        },
+        success: function (response) {
+           if(response.startsWith("Connection:")){
+               console.log("Error: " + response)
+           }else if(response != "null"){
+               var data = JSON.parse(response);
+               verVersionSeleccionada(data);
+           }
+        }
+    });
+}
+
+function verVersionSeleccionada(data){
+    var texto = unescape(data[0].Titulo) + "<br/><br/>";
+    for(var a = 0; a < data.length; a++){
+        texto += unescape(data[a].Texto) + "<br/>";
+    }
+    $("#modalVersionSeleccionadaTitle").html("Estás viendo la versión #" + data[0].Version);
+    $("#verVersionSeleccionada").html(texto);
+    $("#modalVersionSeleccionada").modal("show");
+}
+
 function compararUltimaVersion(){
     if(sesion.timer.timerId > -1){
         alert("Debes detener el guardado automatico para poder realizar la comparacion.");
@@ -328,18 +368,162 @@ function compararUltimaVersion(){
     }
 }
 
+function diferenciasVersiones(data){
+    $(".del-compare").remove();
+    var a =  $("#previousVersion").val();
+    var b = $("#currentVersion").val();
+    var verA = [];
+    var verB = [];
+    for(var v = 0; v < data.length; v++){
+        if(data[v].Version == a){
+            verA.push(data[v]);
+        }else if(data[v].Version == b){
+            verB.push(data[v]);
+        }
+    }
+    console.log("A: ", verA);
+    console.log("B: ", verB);
+    var result = {
+        upd:  [],
+        del:  [],
+        crear: []
+    };
+    switch(true){
+        case verB.length == verA.length:
+            for(var a = 0; a < verB.length; a++){
+                if(verB[a].Texto != verA[a].Texto){
+                    result.upd.push({'index': a, 'texto': verB[a].Texto});
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verA[a].Texto) + '</button>');
+                    $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + unescape(verB[a].Texto) + '</button>');
+                }else{
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verA[a].Texto) + '</button>');
+                    $("#actual").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verB[a].Texto) + '</button>');
+                }
+            }
+            break;
+        case verB.length > verA.length:
+            //lo nuevo es mayor que lo viejo, quiere decir que inserto texto.
+            for(var a = 0; a < verB.length; a++){
+                //si es undefined, quiere decir que son renglones nuevos.
+                if(verA[a] != undefined){
+                    //comparar si coinciden el texto nuevo con el antiguo, sino se actualiza
+                    if(verB[a].Texto != verA[a].Texto){
+                        result.upd.push({'index': a, 'texto': verB[a].Texto});
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verA[a].Texto) + '</button>');
+                        $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + unescape(verB[a].Texto) + '</button>');
+                    }else{
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verA[a].Texto) + '</button>');
+                        $("#actual").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verB[a].Texto) + '</button>');
+                    }
+                }else{
+                    result.crear.push({'index': a, 'texto': verB[a].Texto });
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">&nbsp;</button>');
+                    $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-success del-compare">' + unescape(verB[a].Texto) + '</button>');
+                }
+            }
+            break;
+        case verB.length < verA.length:
+            //lo nuevo es menor que lo viejo, quiere decir que borro texto.
+            for(var a = 0; a < verA.length; a++){
+                //si es undefined, quiere decir que esos renglones ya no existen, se eliminan.
+                if(verB[a] != undefined){
+                    //comparar si coinciden el texto nuevo con el antiguo, sino se actualiza.
+                    if(verA[a].Texto != verB[a].Texto){
+                        result.upd.push({'index': a, 'texto': verB[a].Texto});
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verA[a].Texto) + '</button>');
+                        $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + unescape(verB[a].Texto) + '</button>');
+                    }else{
+                        $("#anterior").append('<button type="button" class="list-group-item list-group-item-action del-compare">' + unescape(verA[a].Texto) + '</button>');
+                        $("#actual").append('<button type="button" class="list-group-item list-group-item-action text-primary del-compare">' + unescape(verB[a].Texto) + '</button>');
+                    }
+                }else{
+                    result.del.push({'index': a, 'texto': verB[a].Texto});
+                    $("#anterior").append('<button type="button" class="list-group-item list-group-item-action text-danger del-compare">' + unescape(verA[a].Texto) + '</button>');
+                    $("#actual").append('<button type="button" class="list-group-item list-group-item-action del-compare">&nbsp;</button>');
+                }
+            }
+            break;
+        default: break;
+        console.log(result);
+        $("#pillCreados").html(result.crear.length);
+        $("#pillActualizados").html(result.upd.length);
+        $("#pillEliminados").html(result.del.length);
+        $("#verA").html("Version : " + verA[0].Version);
+        $("#verB").html("Version : " + verB[0].Version);
+    }
+}
+
+function agregarversiones(){
+    var options = addOptionVersiones(parseInt(sesion.escrito.version));
+    $("#previousVersion").html(options);
+    $("#currentVersion").html(options);
+    $("#viewVersion").html(options);
+}
+
+function getVersiones(){
+    var a =  $("#previousVersion").val();
+    var b = $("#currentVersion").val();
+    $.ajax({
+        data: {
+            perfil: sesion.usuario.perfil,
+            id: sesion.escrito.id,
+            verA: a,
+            verB: b
+        },
+        url: '../php/libreta/getVersiones.php',
+        type: 'post',
+        beforeSend: function () {
+            console.log("Creando nueva version...");
+        },
+        success: function (response) {
+            if(response.startsWith("Connection")){
+                console.log("Error: " + response);
+            }else if(response != "null"){
+                var data = JSON.parse(response);
+                console.log(data);
+                diferenciasVersiones(data);
+            }
+        }
+    });
+}
+
+function crearNuevaVersion(){
+    //loader(true);
+    var texto = $("#hojaTexto").val().split("\n");
+    var version = parseInt(sesion.escrito.version) + 1;
+    for(var t = 0; t < texto.length; t++){
+        $.ajax({
+            data: {
+                perfil: sesion.usuario.perfil,
+                id: sesion.escrito.id,
+                text: escape(texto[t]),
+                version: version,
+                titulo: escape(sesion.escrito.titulo),
+                index: t
+            },
+            url:   '../php/libreta/nuevaVersion.php',
+            type:  'post',
+            beforeSend: function () {
+                console.log("Creando nueva version...");
+            },
+            success: function (response) {
+                if(response.startsWith("Connection")) console.log("Error: " + response);
+                //if(text.length - 1  == t) window.location.reload();
+            }
+        });
+    }
+}
+
 //------------------->triggers
 $(document).ready(function(){
-    loader(true);
-    if(checkCookie("perfilId") && checkCookie("textoid") && checkCookie("titulo")){
+    //loader(true);
+    if(checkCookie("perfilId") && checkCookie("textoid")){
         $(".datos-texto-editar").hide();
         sesion.usuario.perfil = getCookie("perfilId");
         sesion.escrito.id = getCookie("textoid");
-        sesion.escrito.titulo = unescape(getCookie("titulo"));
-        $("#titulo").html(sesion.escrito.titulo);
         obtenerTexto();
     }else{
-        window.location.href = "index.html";
+       // window.location.href = "index.html";
     }
 });
 
@@ -371,6 +555,19 @@ $("#cancelarEditarTitulo").click(function(){
     mostrarEditar(false);
 });
 
-$("#volver").click(function(){
-    window.location.href = "perfil.html";
+$("#crearVersion").click(function(){
+    crearNuevaVersion();
+});
+
+$("#compareVersiones").click(function(){
+    getVersiones();
+});
+
+$("#viewVersion").change(function(){
+    //obtener version seleccionada.
+    versionSeleccionada($(this).val());
+});
+
+$("#btnVersionSeleccionada").click(function(){
+    $("#viewVersion").val(sesion.escrito.version);
 });

@@ -5,7 +5,7 @@ function obtenerTextos(){
         url:   '../php/taller/textosTaller.php',
         type:  'post',
         beforeSend: function () {
-            console.log("Actualizando titulo...");
+            console.log("obteniendo textos del taller...");
         },
         success: function (response) {
             switch(true){
@@ -26,32 +26,38 @@ function pegartextos(data){
     let cards = "";
     var texto = "";
     for(var t = 0; t < data.length; t++){
-        if(data[t].Index == 5){
+        if(data[t].Index == 5 || (data[t -1] != undefined && data[t - 1].Titulo != data[t].Titulo)){
             var autor = unescape(data[t].Nombre) + " ( " + unescape(data[t].Usuario) + " )";
             var titulo = unescape(data[t].Titulo);
-            cards += sesion.templates.tarjetas.replace("#texto#", texto)
+            cards += sesion.templates.tarjetas.escritos.replace("#texto#", texto)
             .replace("#autor#", autor)
             .replace("#titulo#", titulo)
-            .replace("#textoid#", data[t].ID);
+            .replace("#textoid#", data[t].ID)
+            .replace("#autorid#", data[t].AutorId);
             texto = "";
         }else{
             texto += unescape(data[t].Texto);
         }
     }
     $("#cardTextos").html(cards);
+    leertexto();
     loader(false);
 }
 
-function verTextoTaller(idtexto){
-    crearCookie("textoid", idtexto);
-    //window.location.href = "";
+function verTextoTaller(idtexto, idautor){
+    crearCookie("escritoid", idtexto);
+    crearCookie("autorid", idautor);
+    window.location.href = "escrito.html";
+}
+
+function leertexto(){
+    $(".ver-texto-taller").click(function(){
+        verTextoTaller($(this).data("ti"), $(this).data("ai"));
+    });
 }
 
 //---------------->triggres
 $(document).ready(function(){
     loader(true);
     obtenerTextos();
-});
-$(".ver-texto-taller").on("click", function(){
-    verTextoTaller($(this).data("ti"));
 });

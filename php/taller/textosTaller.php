@@ -5,9 +5,11 @@ $query = "SELECT
 u.nombres, 
 u.apellidos, 
 u.usuario,
+u.perfilId,
 tu.tituloTexto,
 tu.idTexto,
 tu.indexTexto,
+tu.txVersion,
 tu.texto FROM TextosUsuarios tu INNER JOIN Usuarios u
 ON tu.perfilId = u.perfilId
 WHERE tu.estatus = '1' AND u.estatus = '1' AND tu.indexTexto IN(0,1,2,3,4,5)
@@ -23,8 +25,9 @@ if($sel){
         $id = $row['idTexto'];
         $index = $row['indexTexto'];
         $txt = $row['texto'];
+        $autor = $row['perfilId'];
         $jsonArray[] = array('Titulo' => $titulo, 'ID' => $id, 'Texto' => $txt, 'Index' => $index, 
-                        'Nombre' => $nombre, 'Apellido' => $apellido, 'Usuario' => $usuario);
+                        'Nombre' => $nombre, 'Apellido' => $apellido, 'Usuario' => $usuario, 'AutorId' => $autor);
     }
     $result = json_encode($jsonArray);
 }else{

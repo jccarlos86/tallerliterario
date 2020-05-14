@@ -98,9 +98,7 @@ function crearUsuario(email, password, perfilId){
                     $("#modalRegistro").modal("hide");
                     alert("Usuario creado exitosamente.");
                     setTimeout(() => {
-                        //sesion.usuario.perfilid = perfilId;
                         crearCookie("perfilId", perfilId);
-                        //window.location.href="perfil.html?upi=" + perfilId;
                         window.location.href="perfil.html";
                     }, 1500);
                 break;

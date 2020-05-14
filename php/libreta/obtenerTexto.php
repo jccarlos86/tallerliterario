@@ -3,20 +3,32 @@ include '../conexion.php';
 $idTx = $_POST['idTexto'];
 $perfil = $_POST['perfil'];
 
-$query = "SELECT tituloTexto, indexTexto, texto FROM TextosUsuarios WHERE perfilId = '$perfil' AND idTexto = '$idTx' ORDER BY indexTexto";
-
-$sel = $con ->query($query);
-if($sel){
-    while($row = mysqli_fetch_array($sel)){
-        $titulo = $row['tituloTexto'];
-        $idx = $row['indexTexto'];
-        $txt = $row['texto'];
-        $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt );
+$selMax = $con -> query("SELECT MAX(txVersion) AS 'MaxVersion' FROM TextosUsuarios WHERE perfilId = '$perfil' AND idTexto = '$idTx'");
+if($selMax){
+    while($row = mysqli_fetch_array($selMax)){
+        $ver = $row['MaxVersion'];
     }
-    $result = json_encode($jsonArray);
+    $query = "SELECT tituloTexto, indexTexto, texto, txVersion FROM TextosUsuarios WHERE 
+    perfilId = '$perfil' AND idTexto = '$idTx' AND txVersion = '$ver' ORDER BY indexTexto";
+
+    $sel = $con ->query($query);
+    if($sel){
+        while($row = mysqli_fetch_array($sel)){
+            $titulo = $row['tituloTexto'];
+            $idx = $row['indexTexto'];
+            $txt = $row['texto'];
+            $version = $row['txVersion'];
+            $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt, 'Version' => $version);
+        }
+        $result = json_encode($jsonArray);
+    }else{
+        $result = die("Connection failed: " . mysqli_connect_error());
+    }
+
 }else{
-    $result = die("Connection failed: " . mysqli_connect_error());
+    $result = die("Connection failed: not max version -> " . mysqli_connect_error());
 }
+
 echo $result;
 mysqli_close($con);
 ?>
