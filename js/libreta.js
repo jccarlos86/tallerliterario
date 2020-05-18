@@ -45,6 +45,7 @@ function obtenerTexto(){
                     sesion.escrito.cantidadfilas = data.length;
                     sesion.escrito.version = data[0].Version;
                     sesion.escrito.titulo = unescape(data[0].Titulo);
+                    sesion.escrito.genero = unescape(data[0].Genero);
                     insertarTexto(data);
                     break;
             }
@@ -144,8 +145,7 @@ function actualizarTexto(index, texto){
             idx: index,
             txt: texto,
             idTexto: sesion.escrito.id,
-            perfil: sesion.usuario.perfil,
-            titulo: sesion.escrito.titulo
+            perfil: sesion.usuario.perfil
         },
         url:   '../php/libreta/actualizar.php',
         type:  'post',
@@ -163,8 +163,9 @@ function borrarTexto(index){
     $.ajax({
         data: {
             idx: index,
-            idTexto: sesion.escrito,id,
-            perfil: sesion.usuario.perfil
+            idTexto: sesion.escrito.id,
+            perfil: sesion.usuario.perfil,
+            version: sesion.escrito.version
         },
         url:   '../php/libreta/borrar.php',
         type:  'post',
@@ -181,11 +182,13 @@ function borrarTexto(index){
 function crearTexto(index, texto){
     $.ajax({
         data: {
-             idx: index,
+            idx: index,
             txt: texto,
             idTexto: sesion.escrito.id,
             perfil: sesion.usuario.perfil,
-            titulo:sesion.escrito.titulo
+            titulo: escape(sesion.escrito.titulo),
+            version: sesion.escrito.version,
+            genero: escape(sesion.escrito.genero)
         },
         url:   '../php/libreta/crear.php',
         type:  'post',
@@ -520,7 +523,7 @@ function crearNuevaVersion(){
 
 //------------------->triggers
 $(document).ready(function(){
-    //loader(true);
+    loader(true);
     if(checkCookie("perfilId") && checkCookie("escritoid")){
         $(".datos-texto-editar").hide();
         sesion.usuario.perfil = getCookie("perfilId");

@@ -8,7 +8,7 @@ if($selMax){
     while($row = mysqli_fetch_array($selMax)){
         $ver = $row['MaxVersion'];
     }
-    $query = "SELECT tituloTexto, indexTexto, texto, txVersion FROM TextosUsuarios WHERE 
+    $query = "SELECT tituloTexto, indexTexto, texto, txVersion, genero FROM TextosUsuarios WHERE 
     perfilId = '$perfil' AND idTexto = '$idTx' AND txVersion = '$ver' ORDER BY indexTexto";
 
     $sel = $con ->query($query);
@@ -18,7 +18,8 @@ if($selMax){
             $idx = $row['indexTexto'];
             $txt = $row['texto'];
             $version = $row['txVersion'];
-            $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt, 'Version' => $version);
+            $genero = $row['genero'];
+            $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt, 'Version' => $version, 'Genero' => $genero);
         }
         $result = json_encode($jsonArray);
     }else{

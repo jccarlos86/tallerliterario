@@ -11,6 +11,7 @@ var sesion = {
         cantidadfilas: 0,
         titulo: "",
         texto:[],
+        genero: "",
         reacciones:{
             likes: 0,
             dislikes: 0,
@@ -46,7 +47,7 @@ var sesion = {
                                         "</a>"+
 
                                         "<a href='#' class='dropdown-item enviar-texto-taller text-primary' data-toggle='modal' data-target='#modalTaller'"+ 
-                                        "data-ti='#textoid#' data-ttx='#titulotexto#' data-vrs='#version#'>"+
+                                        "data-ti='#textoid#' data-ttx='#titulotexto#' data-vrs='#version#' data-gen='#genero#'>"+
                                             "<i class='fas fa-envelope-open-text text-primary'></i>"+
                                             "  Taller"+
                                         "</a>"+

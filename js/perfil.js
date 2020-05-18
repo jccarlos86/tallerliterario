@@ -68,7 +68,7 @@ function crearTexto(idTexto){
             switch(response){
                 case "true":
                     if($("#irTexto").prop("checked")){
-                        crearCookie("textoid", idTexto);
+                        crearCookie("escritoid", idTexto);
                         setTimeout(() => {
                             window.location.href = "libreta.html";
                         }, 1000);
@@ -177,6 +177,7 @@ function crearTabla(data){
             .replace("#textoid#", data[d].ID)
             .replace("#textoid#", data[d].ID)
             .replace("#version#", data[d].Version)
+            .replace("#genero#", data[d].Genero)
             .replace("#titulotexto#", unescape(data[d].Titulo))
             .replace("#titulotexto#", unescape(data[d].Titulo))
             .replace("#titulotexto#", unescape(data[d].Titulo))

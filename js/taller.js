@@ -17,6 +17,10 @@ function obtenerTextos(){
                 case response.startsWith("Connection"):
                     console.log("Error: " + response);
                     break;
+                case "null":
+                    alert("No se encontraron textos.");
+                    loader(false);
+                    break;
             }
         }
     });

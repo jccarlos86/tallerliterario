@@ -180,7 +180,7 @@ function agregarReaccion(tipo){
 
 //------------------->triggers
 $(document).ready(function(){
-    //loader(true);
+    loader(true);
     if(checkCookie("perfilId") && checkCookie("escritoid")){
         sesion.usuario.perfil = getCookie("perfilId");
         sesion.escrito.id = getCookie("escritoid")

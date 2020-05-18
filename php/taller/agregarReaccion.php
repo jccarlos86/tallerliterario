@@ -46,6 +46,9 @@
     //validamos si el usuario ya ha reaccionado.
     $val = $con -> query($validate);
     if($val){
+        
+
+
         if(mysqli_num_rows($val) > 0){
             //ya ha reaccionado, por lo tanto se elimina esa reaccion.
             $del = $con -> query($delete);

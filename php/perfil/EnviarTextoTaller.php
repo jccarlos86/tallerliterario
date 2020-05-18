@@ -35,7 +35,7 @@
                 $result = die("Connection failed: No se pudo enviar el texto al taller: " . mysqli_connect_error());
             }
         }else{
-            $result = "Invalido: el texto debe tener al menos 5 lineas.";
+            $result = "Invalido: el texto debe tener al menos 5 lineas, Max Index: " . $maxIndex;
         }
     }else{
         $result = die("Connection failed: No se pudo validar el texto: " . mysqli_connect_error());
