@@ -1,24 +1,22 @@
 function datosCrearTexto(){
     var titulo = $("#tituloTexto").val();
+    var genero = $("#generoTexto").val();
     if(titulo.length > 0){
-        $("#modalNuevoTexto").modal("hide");
-        loader(true);
-        if(!existeTitulo(titulo)){
+        if(genero.length > 0){
+            $("#modalNuevoTexto").modal("hide");
+            loader(true);
             generarIdTexto();
+        }else{
+            alert("Agrega un genero literario para tu texto.");
         }
-        loader(false);
-        $("#modalNuevoTexto").modal("show");
-        setTimeout(() => {
-            alert("ya existe un texto con el mismo titulo");
-        }, 800);
     }else{
-        alert("Agrega un titulo al campo de titulo");
+        alert("Agrega un titulo al campo de titulo.");
     }
 }
 
-function existeTitulo(titulo){
-    return $(".titulos span:Contains('" + titulo + "')").length > 0 ? true : false;
-}
+// function existeTitulo(titulo){
+//     return $(".titulos span:Contains('" + titulo + "')").length > 0 ? true : false;
+// }
 
 function generarIdTexto(){
     var id = Math.round(Math.random() * 999999999);
@@ -58,7 +56,8 @@ function crearTexto(idTexto){
         data: {
             titulo: escape(titulo),
             idTexto: idTexto,
-            perfilid: sesion.usuario.perfil
+            perfilid: sesion.usuario.perfil,
+            genero: escape($("#generoTexto").val())
         },
         url:   '../php/perfil/crearTexto.php',
         type:  'post',
@@ -66,20 +65,27 @@ function crearTexto(idTexto){
             console.log("Guardando...");
         },
         success:  function (response) {
-            if(response == "true"){
-                if($("#irTexto").prop("checked")){
-                    crearCookie("textoid", idTexto);
-                    setTimeout(() => {
-                        window.location.href = "libreta.html";
-                    }, 1000);
-                }else{
-                    cargarTextos();
-                    $("#tituloTexto").val("");
-                }
-            }else{
-                loader(false);
-                $("#modalNuevoTexto").modal("show");
-                console.log("Error: " + response);
+            switch(response){
+                case "true":
+                    if($("#irTexto").prop("checked")){
+                        crearCookie("textoid", idTexto);
+                        setTimeout(() => {
+                            window.location.href = "libreta.html";
+                        }, 1000);
+                    }else{
+                        cargarTextos();
+                        $("#tituloTexto").val("");
+                        $("#generoTexto").val("");
+                    }
+                    break;
+                case "duplicado":
+                    loader(false);
+                    alert("ya has creado un texto con el mismo nombre.");
+                    break;
+                default:
+                    loader(false);
+                    console.log(response);
+                    break;
             }
         }
     });
@@ -181,29 +187,9 @@ function crearTabla(data){
             .replace("#titulotexto#", unescape(data[d].Titulo))
             .replace("#titulotexto#", unescape(data[d].Titulo));
         }
-        // rows += sesion.templates.tabla.fila.abrir;
-        // rows += sesion.templates.tabla.columnas.opciones.abrir;
-        // rows += "<a href='#' class='dropdown-item borrar-texto text-danger' data-toggle='modal' data-target='#modalBorrarTexto' data-ti='" + 
-        // data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
-        //     "<i class='far fa-trash-alt text-danger'></i>"+
-        //     "  Eliminar"+
-        // "</a>";
-        // rows += "<a href='#' class='dropdown-item enviar-texto-taller text-primary' data-toggle='modal' data-target='#modalTaller' data-ti='" + 
-        // data[d].ID + "' data-ttx='" + unescape(data[d].Titulo) + "'>"+
-        //     "<i class='fas fa-envelope-open-text text-primary'></i>"+
-        //     "  Taller"+
-        // "</a>";
-        // rows += sesion.templates.tabla.columnas.opciones.cerrar;
-        // rows += sesion.templates.tabla.columnas.titulos.abrir;
-        // rows += "<a class='texto-libreta' data-ti='" + data[d].ID + "' data-ttx='" + data[d].Titulo + "' href='#'>"+
-        //     "<span>" + unescape(data[d].Titulo) + "</span>"+
-        // "</a>";
-        // rows += sesion.templates.tabla.columnas.titulos.cerrar;
-        // rows += sesion.templates.tabla.fila.cerrar;
     }
     $("#tblTextos tbody").html(rowsPerfil);
     $("#tblTextosTaller tbody").html(rowsTaller);
-    //$("#tblTextosTaller").hide();
     alertaBorrar();
     alertaTaller();
     clickLibreta();
@@ -347,13 +333,16 @@ function enviarTextoTaller(idtx){
                 case response.startsWith("true"):
                     window.location.reload();
                     break;   
+                case response.startsWith("Invalido"):
+                    alert(response);
+                    break;
             }
         }
     });
 }
 
 function verEscrito(id, titulo, tipo){
-    crearCookie("textoid", id);
+    crearCookie("escritoid", id);
     //crearCookie("titulo", titulo);
     if(tipo == 0){
         window.location.href = "libreta.html";

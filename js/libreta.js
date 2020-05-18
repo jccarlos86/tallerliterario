@@ -488,7 +488,7 @@ function getVersiones(){
 }
 
 function crearNuevaVersion(){
-    //loader(true);
+    loader(true);
     var texto = $("#hojaTexto").val().split("\n");
     var version = parseInt(sesion.escrito.version) + 1;
     for(var t = 0; t < texto.length; t++){
@@ -507,8 +507,12 @@ function crearNuevaVersion(){
                 console.log("Creando nueva version...");
             },
             success: function (response) {
-                if(response.startsWith("Connection")) console.log("Error: " + response);
-                //if(text.length - 1  == t) window.location.reload();
+                if(response === "true") {
+                    //alert("Nueva version creada correctamente");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }else if(response.startsWith("Connection")) console.log("Error: " + response);
             }
         });
     }
@@ -517,10 +521,10 @@ function crearNuevaVersion(){
 //------------------->triggers
 $(document).ready(function(){
     //loader(true);
-    if(checkCookie("perfilId") && checkCookie("textoid")){
+    if(checkCookie("perfilId") && checkCookie("escritoid")){
         $(".datos-texto-editar").hide();
         sesion.usuario.perfil = getCookie("perfilId");
-        sesion.escrito.id = getCookie("textoid");
+        sesion.escrito.id = getCookie("escritoid");
         obtenerTexto();
     }else{
        // window.location.href = "index.html";

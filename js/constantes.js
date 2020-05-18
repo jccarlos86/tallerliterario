@@ -14,7 +14,7 @@ var sesion = {
         reacciones:{
             likes: 0,
             dislikes: 0,
-            reconocimientos: 0
+            insignias: 0
         },
         versiones: []
     },
@@ -22,30 +22,6 @@ var sesion = {
         timerId: -1
     },
     templates:{
-        tabla:{
-            fila:{
-                abrir: "<tr>",
-                cerrar: "</tr>"
-            },
-            columnas:{
-                opciones:{
-                    abrir: "<td>"+
-                    '<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">'+
-                        '<ul class="navbar-nav mr-auto">'+
-                            '<li class="nav-item dropdown">'+
-                               ' <a class="nav-link p-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'+
-                                    '<i class="fas fa-cog"></i>'+
-                                '</a>'+
-        
-                                '<div class="dropdown-menu" aria-labelledby="navbarDropdown">',
-                    cerrar: "</div></li></ul></nav></td>"
-                },
-                titulos:{
-                    abrir:"<td class = 'titulos'>",
-                    cerrar:"</td>"
-                }
-            }
-        },
         tablas:{
             taller: "<tr><td>"+ 
                     "<a class='texto-libreta prevent-default' data-ti='#textoid#' data-ttx='#titulotexto#' data-tipo='1' href='#'>"+
@@ -90,7 +66,7 @@ var sesion = {
         tarjetas:{
             escritos:'<div class="card">'+
                         '<div class="card-body">'+
-                            '<h5 class="card-title">#titulo#</h5>'+
+                            '<h5 class="card-title text-uppercase">#titulo#</h5>'+
                             '<p class="card-text">#texto#</p>'+
                             '<p class="card-text"><small class="text-muted">#autor#</small></p>'+
                             '<p><button data-ti="#textoid#" data-ai="#autorid#" type="button" class="btn btn-primary ver-texto-taller">Ver mas</button></p>'+
@@ -129,7 +105,8 @@ function loader(mostrar){
     if(!mostrar){
         setTimeout(() => {
             $("#modalLoader").modal("hide");
-            $("#modalLoader").remove();
+            $("#modalLoader, .modal-backdrop").remove();
+            $("body").removeClass("modal-open");
         }, 500);
     }
 }

@@ -6,9 +6,6 @@ $query = "SELECT
 tu.tituloTexto,
 tu.indexTexto,
 tu.texto,
-tu.likes,
-tu.dislikes,
-tu.reconocimientos,
 u.nombres,
 u.usuario
 FROM TextosUsuarios tu
@@ -25,11 +22,8 @@ if($sel){
         $txt = $row['texto'];
         $nombre = $row['nombres'];
         $user = $row['usuario'];
-        $like = $row['likes'];
-        $dislike = $row['dislikes'];
-        $recon = $row['reconocimientos'];
-        $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt, 'Likes' => $like, 
-        'Dislikes' => $dislike, 'Reconocimientos' => $recon, 'Autor' => $nombre . ' ( ' . $user . ' )');
+        $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt,
+        'Autor' => $nombre . ' ( ' . $user . ' )');
     }
     $result = json_encode($jsonArray);
 }else{

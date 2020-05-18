@@ -2,7 +2,8 @@
 include '../conexion.php';
 $idperfil = $_POST['idperfil'];
 
-$query = "SELECT DISTINCT(tituloTexto), idTexto, estatus, MAX(txVersion) as maxVersion FROM TextosUsuarios WHERE perfilId = '$idperfil' GROUP BY tituloTexto";
+$query = "SELECT DISTINCT(tituloTexto), idTexto, estatus, MAX(txVersion) as maxVersion 
+FROM TextosUsuarios WHERE perfilId = '$idperfil' GROUP BY tituloTexto";
 
 $sel = $con ->query($query);
 if($sel){
@@ -10,7 +11,7 @@ if($sel){
         $titulo = $row['tituloTexto'];
         $id = $row['idTexto'];
         $estatus = $row['estatus'];
-        $ver = $_POST['maxVersion'];
+        $ver = $row['maxVersion'];
         $jsonArray[] = array('Titulo' => $titulo, 'ID' => $id, 'Estatus' => $estatus, 'Version' => $ver);
     }
     $result = json_encode($jsonArray);

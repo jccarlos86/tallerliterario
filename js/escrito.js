@@ -105,9 +105,6 @@ function modoDiurno(){
 
 function insertarTexto(data){
     var texto = "";
-    sesion.escrito.reacciones.likes = data[0].Likes;
-    sesion.escrito.reacciones.dislikes = data[0].Dislikes
-    sesion.escrito.reacciones.reconocimientos = data[0].Reconocimientos;
     sesion.escrito.titulo = unescape(data[0].Titulo);
     for(var d = 0; d < data.length; d++){
         texto += unescape(data[d].Texto) + "<br/>";
@@ -120,16 +117,47 @@ function insertarTexto(data){
 }
 
 function reactionCount(){
-    $("#cntReconocimiento").html(sesion.escrito.reacciones.reconocimientos);
-    $("#cntLikes").html(sesion.escrito.reacciones.likes);
-    $("#cntDislikes").html(sesion.escrito.reacciones.dislikes);
+    $.ajax({
+        data: { 
+            id: sesion.escrito.id
+        },
+        url:   '../php/taller/totalReacciones.php',
+        type:  'post',
+        beforeSend: function () {
+            console.log("obteniendo reacciones del texto...");
+        },
+        success: function (response) {
+            switch(true){
+                case response != "null":
+                    var data = JSON.parse(response);
+                    console.log(data);
+                    for(var r = 0; r < data.length; r++){
+                        if(data[r].Reaccion == 0){
+                            sesion.escrito.reacciones.dislikes = data[r].Total;
+                        }else if(data[r].Reaccion == 1){
+                            sesion.escrito.reacciones.likes = data[r].Total;
+                        }else if(data[r].Reaccion == 2){
+                            sesion.escrito.reacciones.insignias = data[r].Total;
+                        }
+                    }
+                    break;
+                case response.startsWith("Connection"):
+                    console.log("Error: " + response);
+                    break;
+            }
+            $("#cntDislikes").html(sesion.escrito.reacciones.dislikes);
+            $("#cntLikes").html(sesion.escrito.reacciones.likes);
+            $("#cntReconocimiento").html(sesion.escrito.reacciones.insignias);
+        }
+    });
 }
 
 function agregarReaccion(tipo){
     $.ajax({
         data: { 
             id: sesion.escrito.id,
-            tipo: tipo
+            tipo: tipo,
+            perfil: sesion.usuario.perfil
         },
         url:   '../php/taller/agregarReaccion.php',
         type:  'post',
@@ -138,18 +166,7 @@ function agregarReaccion(tipo){
         },
         success: function (response) {
             switch(true){
-                case response == "true":
-                    switch(tipo){
-                        case 0:
-                            sesion.escrito.reacciones.likes++;
-                            break;
-                        case 1:
-                            sesion.escrito.reacciones.dislikes++;
-                            break;
-                        case 2:
-                            sesion.escrito.reacciones.reconocimientos++;
-                            break;
-                    }
+                case response.startsWith("true"):
                     reactionCount();
                     alert("Reaccion agregada.");
                     break;
@@ -164,9 +181,9 @@ function agregarReaccion(tipo){
 //------------------->triggers
 $(document).ready(function(){
     //loader(true);
-    if(checkCookie("perfilId") && checkCookie("textoid")){
+    if(checkCookie("perfilId") && checkCookie("escritoid")){
         sesion.usuario.perfil = getCookie("perfilId");
-        sesion.escrito.id = getCookie("textoid")
+        sesion.escrito.id = getCookie("escritoid")
         obtenerEscrito();
         obtenerComentarios();
     }else{
