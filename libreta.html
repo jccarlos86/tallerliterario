@@ -11,70 +11,132 @@
     <link rel="stylesheet" href="css/fuentes.css?v=170520202304">
     <title>Libreta</title>
 </head>
-<body class="baloo">
-    <div class="container">
-        <!-- menu -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a id="volver" href="perfil.html" class="nav-link nav-item">
-                        <svg class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5.854 4.646a.5.5 0 010 .708L3.207 8l2.647 2.646a.5.5 0 01-.708.708l-3-3a.5.5 0 010-.708l3-3a.5.5 0 01.708 0z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M2.5 8a.5.5 0 01.5-.5h10.5a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="">Volver</span>
-                    </a>
-                    <a href="#" id="comparar" class="nav-link nav-item prevent-default">
-                        <svg class="bi bi-layers-half" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M3.188 8L.264 9.559a.5.5 0 000 .882l7.5 4a.5.5 0 00.47 0l7.5-4a.5.5 0 000-.882L12.813 8l-4.578 2.441a.5.5 0 01-.47 0L3.188 8z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M7.765 1.559a.5.5 0 01.47 0l7.5 4a.5.5 0 010 .882l-7.5 4a.5.5 0 01-.47 0l-7.5-4a.5.5 0 010-.882l7.5-4zM1.563 6L8 9.433 14.438 6 8 2.567 1.562 6z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="">Comparar</span>
-                    </a>
-                    <a href="#" class="nav-link nav-item prevent-default" data-toggle="modal" data-target="#modalAutoGuardar">
-                        <svg class="bi bi-compass" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 15.016a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm0 1a7.5 7.5 0 100-15 7.5 7.5 0 000 15z" clip-rule="evenodd"/>
-                            <path d="M6 1a1 1 0 011-1h2a1 1 0 010 2H7a1 1 0 01-1-1zm.94 6.44l4.95-2.83-2.83 4.95-4.95 2.83 2.83-4.95z"/>
-                        </svg>
-                        <span class="">Auto Guardar</span>
-                    </a>
-                    <a href="#" id="guardarTexto" class="nav-link nav-item prevent-default">
-                        <svg class="bi bi-box-arrow-in-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 7.854a.5.5 0 00.708 0L8 5.207l2.646 2.647a.5.5 0 00.708-.708l-3-3a.5.5 0 00-.708 0l-3 3a.5.5 0 000 .708z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M8 15a.5.5 0 00.5-.5v-9a.5.5 0 00-1 0v9a.5.5 0 00.5.5z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M1.5 2.5A1.5 1.5 0 013 1h10a1.5 1.5 0 011.5 1.5v8A1.5 1.5 0 0113 12h-1.5a.5.5 0 010-1H13a.5.5 0 00.5-.5v-8A.5.5 0 0013 2H3a.5.5 0 00-.5.5v8a.5.5 0 00.5.5h1.5a.5.5 0 010 1H3a1.5 1.5 0 01-1.5-1.5v-8z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="">Guardar</span>
-                    </a>
-                    <a href="#" id="crearVersion" class="nav-link nav-item prevent-default">
-                        <svg class="bi bi-check-box" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>
-                            <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V8a.5.5 0 00-1 0v5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h8a.5.5 0 000-1H3A1.5 1.5 0 001.5 3v10z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="">Nueva versi&oacute;n</span>
-                    </a>
-                    <!-- <a href="#" id="crearVersion" class="nav-link nav-item prevent-default">
-                        <span class="">versi&oacute;n</span>
-                        <select class="custom-select mr-sm-2" id="viewVersion"></select>
-                    </a> -->
-                </div>
+<body class="bg-dark baloo m-0 p-0">
+    <div class="container-fluid">
+        <!-- menu opciones-->
+        <div class="row pb-3">
+            <div class="col-sm-12 p-0">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom p-2">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item mr-4">
+                                <a id="volver" href="perfil.html" class="nav-link nav-item">
+                                    <svg class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M5.854 4.646a.5.5 0 010 .708L3.207 8l2.647 2.646a.5.5 0 01-.708.708l-3-3a.5.5 0 010-.708l3-3a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M2.5 8a.5.5 0 01.5-.5h10.5a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="">Volver</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a href="#" id="comparar" class="nav-link nav-item prevent-default">
+                                    <svg class="bi bi-layers-half" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3.188 8L.264 9.559a.5.5 0 000 .882l7.5 4a.5.5 0 00.47 0l7.5-4a.5.5 0 000-.882L12.813 8l-4.578 2.441a.5.5 0 01-.47 0L3.188 8z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M7.765 1.559a.5.5 0 01.47 0l7.5 4a.5.5 0 010 .882l-7.5 4a.5.5 0 01-.47 0l-7.5-4a.5.5 0 010-.882l7.5-4zM1.563 6L8 9.433 14.438 6 8 2.567 1.562 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="">Comparar</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a href="#" id="icono_autoguardar" class="nav-link nav-item prevent-default" data-toggle="modal" data-target="#modalAutoGuardar">
+                                    <svg class="bi bi-compass" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8 15.016a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm0 1a7.5 7.5 0 100-15 7.5 7.5 0 000 15z" clip-rule="evenodd"/>
+                                        <path d="M6 1a1 1 0 011-1h2a1 1 0 010 2H7a1 1 0 01-1-1zm.94 6.44l4.95-2.83-2.83 4.95-4.95 2.83 2.83-4.95z"/>
+                                    </svg>
+                                    <span class="">Auto Guardar</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a href="#" id="guardarTexto" class="nav-link nav-item prevent-default">
+                                    <svg class="bi bi-box-arrow-in-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M4.646 7.854a.5.5 0 00.708 0L8 5.207l2.646 2.647a.5.5 0 00.708-.708l-3-3a.5.5 0 00-.708 0l-3 3a.5.5 0 000 .708z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M8 15a.5.5 0 00.5-.5v-9a.5.5 0 00-1 0v9a.5.5 0 00.5.5z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M1.5 2.5A1.5 1.5 0 013 1h10a1.5 1.5 0 011.5 1.5v8A1.5 1.5 0 0113 12h-1.5a.5.5 0 010-1H13a.5.5 0 00.5-.5v-8A.5.5 0 0013 2H3a.5.5 0 00-.5.5v8a.5.5 0 00.5.5h1.5a.5.5 0 010 1H3a1.5 1.5 0 01-1.5-1.5v-8z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="">Guardar</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a href="#" id="crearVersion" class="nav-link nav-item prevent-default">
+                                    <svg class="bi bi-check-box" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h10a1.5 1.5 0 001.5-1.5V8a.5.5 0 00-1 0v5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V3a.5.5 0 01.5-.5h8a.5.5 0 000-1H3A1.5 1.5 0 001.5 3v10z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="">Nueva versi&oacute;n</span>
+                                </a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a href="#" id="enviarTaller" class="nav-link nav-item prevent-default">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8.47 1.318a1 1 0 0 0-.94 0l-6 3.2A1 1 0 0 0 1 5.4v.818l5.724 3.465L8 8.917l1.276.766L15 6.218V5.4a1 1 0 0 0-.53-.882l-6-3.2zM15 7.388l-4.754 2.877L15 13.117v-5.73zm-.035 6.874L8 10.083l-6.965 4.18A1 1 0 0 0 2 15h12a1 1 0 0 0 .965-.738zM1 13.117l4.754-2.852L1 7.387v5.73zM7.059.435a2 2 0 0 1 1.882 0l6 3.2A2 2 0 0 1 16 5.4V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5.4a2 2 0 0 1 1.059-1.765l6-3.2z"/>
+                                    </svg>
+                                    <span class="">Enviar al taller</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
-        </nav>
-        <!-- libreta -->
+        </div>
+        
+        <!-- datos del texto -->
         <div class="row pt-2 pb-2">
-            <div class="col-sm-12">
-                <span class="">Versi&oacute;n</span>
-                <select class="custom-select mr-sm-2 w-25" id="viewVersion"></select>
+            <div class="col-sm-12 p-2">
+                <div class="card w-75 mx-auto m-2">
+                    <h5 id="" class="card-header">Acerca del texto</h5>
+                    <div class="card-body">
+                        <div class="alert alert-warning" role="alert" id="alertAutoGuardado"></div>
+                        <div class="texto-lectura">
+                            <ul class="nav datos-texto">
+                                <li class="nav-item mr-2">
+                                    <p id="titulo">titulo del texto</p>
+                                </li>
+                                <li class="nav-item mr-3">
+                                    <label for="viewVersion">Versi&oacute;n</label>
+                                </li>
+                                <li class="nav-item mr-2">
+                                    <select class="custom-select mr-sm-2" id="viewVersion"></select>
+                                </li>
+                                <li class="nav-item mr-2">
+                                    <small id="ultimaVezGuardado" class="text-muted"></small>
+                                </li>
+                            </ul>
+                            <a href="#" id="editarTitulo" class="btn btn-primary prevent-default datos-texto-lectura">Editar Titulo</a>
+                        </div>
+        
+                        <div class="texto-editar">
+                            <form>
+                                <div class="form-group">
+                                    <label for="tituloEditar">Editar titulo</label>
+                                    <input type="text" class="form-control" id="tituloEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="generoEditar">Editar genero</label>
+                                    <input type="text" class="form-control" id="generoEditar">
+                                </div>
+                                <div class="form-group mt-2">
+                                    <button type="button" id="cancelarEditarTitulo" class="btn btn-danger">Cancelar</button>
+                                    <button type="button" id="actualizarTitulo" class="btn btn-success">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+                <!-- <span class="text-white">Versi&oacute;n</span>
+                <select class="custom-select mr-sm-2 w-25" id="viewVersion"></select> -->
                 <!-- <small id="versionTexto" class="text-muted" for=""></small> -->
-                <small id="ultimaVezGuardado" class="text-muted" for=""></small><br>
-                <ul class="nav datos-texto">
+                <!-- <small id="ultimaVezGuardado" class="text-muted" for=""></small><br> -->
+                <!-- <ul class="nav datos-texto">
                     <li class="nav-item">
-                        <label id="titulo" class="p-0 m-0 datos-texto-lectura" for=""></label>
+                        <label id="titulo" class="p-0 m-0 datos-texto-lectura" for="tituloEditar"></label>
                         <div class="input-group input-group-sm datos-texto-editar">
-                            <input type="text" class="form-control" aria-label="Sizing example input" id="tituloEditar">
+                            <input type="text" class="form-control" id="tituloEditar">
                         </div>
                     </li>
                     <li class="nav-item">
@@ -88,18 +150,21 @@
                             <small>Guardar</small>
                         </a>
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
+
+        <!-- libreta -->
         <div class="row">
             <div class="col-sm-12">
-                <form>
+                <form class="w-75 mx-auto">
                     <div class="form-group">
                       <textarea class="form-control libreta" id="hojaTexto" rows="3"></textarea>
                     </div>
                 </form>
             </div>
         </div>        
+
         <!-- Modal -->
         <div class="modal fade" id="modalAutoGuardar" tabindex="-1" role="dialog" aria-labelledby="modalAutoGuardarTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -234,30 +299,10 @@
             </div>
             </div>
         </div>
-
-        <!-- modal loader -->
-        <!-- <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-transparent border-0">
-                    <div class="text-center">
-                        <div class="lds-roller">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/constantes.js?v=170520202304"></script>
-    <script src="js/libreta.js?v=170520202304"></script>
+    <script src="js/constantes.js?v=141020202338"></script>
+    <script src="js/libreta.js?v=141020202338"></script>
 </body>
 </html>

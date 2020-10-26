@@ -3,6 +3,8 @@ var sesion = {
         usuario: "",
         nombre: "", 
         apellido: "",
+        acerca: "",
+        password: "",
         perfil: 0
     },
     escrito: {
@@ -17,6 +19,10 @@ var sesion = {
             dislikes: 0,
             insignias: 0
         },
+        estatus:{
+            libreta: 0,
+            taller: 0
+        },
         versiones: []
     },
     timer: {
@@ -24,12 +30,14 @@ var sesion = {
     },
     templates:{
         tablas:{
+            /*
             taller: "<tr><td>"+ 
                     "<a class='texto-libreta prevent-default' data-ti='#textoid#' data-ttx='#titulotexto#' data-tipo='1' href='#'>"+
                         "<span>#titulotexto#</span>"+
                     "</a>"+
                 "</td>"+
                 "</tr>",
+
 
             perfil: "<tr><td>"+
                         '<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">'+
@@ -62,20 +70,43 @@ var sesion = {
                         "<a class='texto-libreta prevent-default' data-ti='#textoid#' data-ttx='#titulotexto#' data-tipo='0' href='#'>"+
                             "<span>#titulotexto#</span>"+
                         "</a>"+
-                    "</td></tr>"
+                    "</td>"+
+
+                    "<td class = 'genero'>"+
+                        "<a class='texto-libreta prevent-default' data-ti='#textoid#' data-ttx='#titulotexto#' data-tipo='0' href='#'>"+
+                            "<span>#titulotexto#</span>"+
+                        "</a>"+
+                    "</td>"+
+
+                    "<td class = 'versiones'>"+
+                        "<a class='texto-libreta prevent-default' data-ti='#textoid#' data-ttx='#titulotexto#' data-tipo='0' href='#'>"+
+                            "<span>#titulotexto#</span>"+
+                        "</a>"+
+                    "</td>"+
+
+                    "<td class = 'estatus'>"+
+                        "<a class='texto-libreta prevent-default' data-ti='#textoid#' data-ttx='#titulotexto#' data-tipo='0' href='#'>"+
+                            "<span>#titulotexto#</span>"+
+                        "</a>"+
+                    "</td>"+
+                    "</tr>"
+                    */
         },
         tarjetas:{
-            escritos:'<div class="card">'+
+            escritos:'<div class="card shadow">'+
+                        '<h5 class="card-header titulo text-uppercase">#titulo#</h5>'+
                         '<div class="card-body">'+
-                            '<h5 class="card-title text-uppercase">#titulo#</h5>'+
-                            '<p class="card-text">#texto#</p>'+
-                            '<p class="card-text"><small class="text-muted">#autor#</small></p>'+
-                            '<p><button data-ti="#textoid#" data-ai="#autorid#" type="button" class="btn btn-primary ver-texto-taller">Ver mas</button></p>'+
+                            '<p class="card-text texto">#texto#</p>'+
+                            '<a href="#" data-ai="#autorid#" class="blockquote-footer autor text-capitalize text-primary pb-2 prevent-default">#autor#</a>'+
+                            '<p class=""><small class="text-muted pb-2 genero">#genero#</small></p>'+
+                            '<p class=""><small class="text-primary pb-2 insignia">#insignia#</small></p>'+
+                            '<p class=""><small class="text-muted pb-3 fecha">#fecha#</small></p>'+
+                            '<p><button data-ti="#textoid#" data-ai="#autorid#" type="button" class="btn btn-outline-primary ver-texto-taller">Ver mas</button></p>'+
                         '</div>'+
                     '</div>',
-            comentarios:'<div class="card mb-2 shadow">'+
-                            '<div class="card-body bg-light shadow">'+
-                                '<h5 class="card-title">#usuario#</h5>'+
+            comentarios:'<div class="card mb-2 shadow bg-transparent lectura">'+
+                            '<div class="card-body shadow">'+
+                                '<h5 class="card-title border-bottom">#usuario#</h5>'+
                                 '<p class="card-text">#comentario#</p>'+
                                 '<p class="card-text">'+
                                     '<small class="text-muted">#fecha#</small>'+

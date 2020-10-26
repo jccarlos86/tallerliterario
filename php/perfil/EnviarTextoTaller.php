@@ -8,12 +8,19 @@
     $result;
     $maxIndex;
 
-    //Candado, validar que tengo al menos 5 lineas (index) en la version que s eva a enviar al taller
+    //Candado, validar que tengo al menos 5 lineas (index) en la version que se va a enviar al taller
     //esto para mejro control al mostrar textos en la pagina del taller funcion pegartextos() en taller.js, valida el index 5 de cada texto.
     $validate = "SELECT MAX(indexTexto) AS 'MaxIndex' FROM TextosUsuarios 
             WHERE perfilId = '$perfil' AND idTexto = '$id' AND txVersion = '$vers'";
 
-    $update = "UPDATE TextosUsuarios SET estatus = '1' WHERE perfilId = '$perfil' AND idTexto = '$id' AND txVersion = '$vers'";
+    $update = "UPDATE TextosUsuarios 
+    SET 
+        estatus = '1',
+        fechaIngresoTaller = NOW() - INTERVAL 5 HOUR + INTERVAL 5 MINUTE
+    WHERE 
+        perfilId = '$perfil' 
+        AND idTexto = '$id' 
+        AND txVersion = '$vers'";
 
     $delete = "DELETE FROM TextosUsuarios WHERE idTexto = '$id' AND perfilId = '$perfil' AND txVersion != '$vers'";
 

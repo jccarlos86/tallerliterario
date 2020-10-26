@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="resources/fontAwesome/all.min.css"> -->
+    <link rel="stylesheet" href="resources/animateCSS/animate.css?v=170520202304">
+    <link rel="stylesheet" href="css/loader.css?v=170520202304">
+    <link rel="stylesheet" href="css/fuentes.css?v=170520202304">
+    <title>Escritor</title>
+</head>
+<body class="bg-dark baloo p-0 m-0">
+    <div class="container-fluid">
+        <!-- menu de opciones -->
+        <div class="row pb-3">
+            <div class="col-sm-12 p-0">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom p-2">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item mr-4">
+                                <a class="nav-link" href="index.html">Inicio</a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <a class="nav-link" href="taller.html">Taller</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- informacion del usuario -->
+        <div class="row pt-2 pb-2">
+            <div class="col-sm-12">
+                <div class="card w-75 mx-auto m-2">
+                    <h5 class="card-header">Acerca del autor</h5>
+                    <div class="card-body">
+                        <div class="atuor-lectura">
+                            <h5 class="card-title">
+                                <span id="nombre" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span> 
+                                <span id="apellido" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span> (
+                                <span id="usuario" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span> )
+                            </h5>
+                            <p class="card-text" id="acercaDe"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- actividad del autor -->
+        <div class="row pt-2 pb-2">
+            <div class="col-sm-12">
+                <div class="card w-75 mx-auto">
+                    <h5 class="card-header">Actividad del autor</h5>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-transparent">
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="#" id="textos_taller" class="prevent-default filtro-texto" data-filtro="taller">
+                                    Textos enviados al taller ( <span class="text-success" id="textosTaller"></span> )
+                                </a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="tblTextos" class="table table-light w-75 mx-auto">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">T&iacute;tulo</th>
+                            <th scope="col">Genero</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="resources/jquery/jquery-3.2.1.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/constantes.js?v=131020201903"></script>
+    <script src="js/escritor.js?v=131020201903"></script>
+</body>
+</html>

@@ -36,16 +36,22 @@ function comentar(){
             url:   '../php/taller/comentar.php',
             type:  'post',
             beforeSend: function () {
-                console.log("Guardando comentario...");
+                //console.log("Guardando comentario...");
+                loader(true);
             },
             success: function (response) {
                 if(response == "true"){
                     $("#comentario").val("");
                     obtenerComentarios();
-                    alert("comentario guardado.");
+                    //alert("comentario guardado.");
                 }else if(response.startsWith("Connection")){
-                    console.log("Error: " + response);
+                    alert("Error: " + response);
                 }
+                loader(false);
+            },
+            error: function(error){
+                loader(false);
+                alert("Error", error);
             }
         });
     }else{
@@ -82,26 +88,57 @@ function insertarComentarios(data){
     var com = "";
     for(var c = 0; c < data.length; c++){
         com += sesion.templates.tarjetas.comentarios
-        .replace("#comentario#", unescape(data[c].Comentario))
+        .replace("#comentario#", unescape(data[c].Comentario.replace(/%0A/g, "<br />")))
         .replace("#fecha#", data[c].Fecha)
         .replace("#usuario#", unescape(data[c].Usuario))
     }
     $("#userComments").html(com);
 }
 
-function modoNocturno(){
-    $("body").removeClass("bg-light");
-    $("body").addClass("bg-dark");
-    $(".lectura").removeClass("text-secondary");
-    $(".lectura").addClass("text-white");
+function modoVision(tipo){
+    let bgremove;
+    let bgadd;
+    let txtremove;
+    let txtadd;
+    switch(tipo){
+        case "diurno":
+            bgremove = "bg-dark";
+            bgadd = "bg-light";
+            txtremove = "text-white";
+            txtadd = "text-secondary";
+            $("#diurno").parent().hide();
+            $("#nocturno").parent().show();
+            break;
+        case "nocturno":
+            bgadd = "bg-dark";
+            bgremove = "bg-light";
+            txtadd = "text-white";
+            txtremove = "text-secondary";
+            $("#diurno").parent().show();
+            $("#nocturno").parent().hide();
+            break;
+    }
+    $("body").removeClass(bgremove);
+    $("body").addClass(bgadd);
+    $(".lectura").removeClass(txtremove);
+    $(".lectura").addClass(txtadd);
+    // $("#comentar").removeClass();
+    // $("#comentar").addClass();
 }
 
-function modoDiurno(){
-    $("body").removeClass("bg-dark");
-    $("body").addClass("bg-light");
-    $(".lectura").removeClass("text-white");
-    $(".lectura").addClass("text-secondary");
-}
+// function modoNocturno(){
+//     $("body").removeClass("bg-light");
+//     $("body").addClass("bg-dark");
+//     $(".lectura").removeClass("text-secondary");
+//     $(".lectura").addClass("text-white");
+// }
+
+// function modoDiurno(){
+//     $("body").removeClass("bg-dark");
+//     $("body").addClass("bg-light");
+//     $(".lectura").removeClass("text-white");
+//     $(".lectura").addClass("text-secondary");
+// }
 
 function insertarTexto(data){
     var texto = "";
@@ -129,6 +166,9 @@ function reactionCount(){
         success: function (response) {
             switch(true){
                 case response != "null":
+                    sesion.escrito.reacciones.dislikes = 0;
+                    sesion.escrito.reacciones.likes = 0;
+                    sesion.escrito.reacciones.insignias = 0;
                     var data = JSON.parse(response);
                     console.log(data);
                     for(var r = 0; r < data.length; r++){
@@ -157,7 +197,8 @@ function agregarReaccion(tipo){
         data: { 
             id: sesion.escrito.id,
             tipo: tipo,
-            perfil: sesion.usuario.perfil
+            perfil: sesion.usuario.perfil,
+            autor: getCookie("autorid")
         },
         url:   '../php/taller/agregarReaccion.php',
         type:  'post',
@@ -168,7 +209,9 @@ function agregarReaccion(tipo){
             switch(true){
                 case response.startsWith("true"):
                     reactionCount();
-                    alert("Reaccion agregada.");
+                    break;
+                case response.startsWith("Mensaje"):
+                    alert(response);
                     break;
                 case response.startsWith("Connection"):
                     console.log("Error: " + response);
@@ -178,25 +221,26 @@ function agregarReaccion(tipo){
     });
 }
 
+function widthEscrito(){
+    if($(window).width() < 430) $(".contenedor-escrito").removeClass("w-75");
+}
 //------------------->triggers
 $(document).ready(function(){
     loader(true);
     if(checkCookie("perfilId") && checkCookie("escritoid")){
         sesion.usuario.perfil = getCookie("perfilId");
-        sesion.escrito.id = getCookie("escritoid")
+        sesion.escrito.id = getCookie("escritoid");
+        modoVision("diurno");
         obtenerEscrito();
         obtenerComentarios();
+        widthEscrito();
     }else{
-        //window.location.href = "perfil.html";
+        window.location.href = "perfil.html";
     }
 });
 
-$("#nocturno").click(function(){
-    modoNocturno();
-});
-
-$("#diurno").click(function(){
-    modoDiurno();
+$(".vision").click(function(){
+    modoVision($(this).attr("id"));
 });
 
 $("#comentar").click(function(){
@@ -206,3 +250,7 @@ $("#comentar").click(function(){
 $(".reaccion").click(function(){
     agregarReaccion($(this).data("tipo"));
 });
+
+
+
+//loader(false);

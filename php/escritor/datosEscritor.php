@@ -1,14 +1,13 @@
 <?php
     include '../conexion.php';
-    $idperfil = $_POST['idperfil'];
+    $idautor = $_POST['idautor'];
 
     $query = "SELECT 
         nombres, 
         apellidos, 
         usuario,
-        contrasena,
         acercaDe
-        FROM Usuarios WHERE perfilId = '$idperfil' 
+        FROM Usuarios WHERE perfilId = '$idautor' 
         AND estatus = '1'";
 
     $sel = $con ->query($query);
@@ -17,13 +16,11 @@
             $nombre = $row['nombres'];
             $apellido = $row['apellidos'];
             $usuario = $row['usuario'];
-            $pass = $row['contrasena'];
             $acerca = $row['acercaDe'];
             $jsonArray[] = array(
                 'Nombre' => $nombre, 
                 'Apellido' => $apellido, 
                 'Usuario' => $usuario,
-                'Contrasena' => $pass,
                 'Acerca' => $acerca
             );
         }

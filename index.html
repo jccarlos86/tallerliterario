@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/fontAwesome/all.min.css">
-    <link rel="stylesheet" href="css/fuentes.css?v=170520202304">
-    <link rel="stylesheet" href="css/loader.css?v=170520202304">
+    <link rel="stylesheet" href="css/fuentes.css?v=131020201903">
+    <link rel="stylesheet" href="css/loader.css?v=131020201903">
     <title>Taller Literario</title>
 </head>
-<body class="baloo">
+<body class="baloo bg-dark">
     <div class="container-fluid">
         <!-- menu -->
         <div class="row pb-3">
@@ -20,18 +20,22 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarMenu">
                         <div class="navbar-nav">
-                            <a class="nav-link nav-item prevent-default" href="#" data-toggle="modal" data-target="#modalIngreso">Ingresar</a>
-                            <a class="nav-link nav-item prevent-default" href="#" data-toggle="modal" data-target="#modalRegistro">Registrarse</a>
-                            <!-- <a class="nav-link nav-item" href="taller.html">Visitar taller</a> -->
+                            <a class="nav-link nav-item prevent-default text-uppercase text-light" href="#">Taller literario</a>
+                            <a class="nav-link nav-item text-light" href="http://laputaenciclopedia.c2-technologies.com/" target="_blank">
+                                puta enciclopedia
+                            </a>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
+        <!-- encabezado -->
         <div class="row">
             <div class="col-sm-12 pt-2">
-                <h2 class="text-center pt-2 pb-2">TALLER LITERARIO</h2>
-                <div class="card-deck pt-5 pb-3">
+                <h2 class="text-center text-light text-uppercase pt-2 pb-4">Iniciar sesion</h2>
+                <!-- cards -->
+                <!-- <div class="card-deck pt-5 pb-3">
                     <div class="card border-0 shadow p-2 mb-5">
                         <i class="fas fa-feather-alt h1 img-top text-center i-index p-2"></i>
                       <div class="card-body">
@@ -71,155 +75,93 @@
                         <small class="text-muted">&nbsp;</small>
                       </div>
                     </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="p-4 w-50 mx-auto bg-light rounded">
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Email</label>
+                            <input type="text" class="form-control" id="emailIngreso" placeholder="e-mail">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Contrase&ntilde;a</label>
+                            <input type="password" class="form-control" id="passwordIngreso" placeholder="Ingresa tu contrasena">
+                        </div>
+                        <div class="form-group mt-2">
+                            <button type="button" id="ingresar" class="btn btn-lg btn-block btn-success">Ingresar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
         <!-- pie de pagina -->
-    <!-- <div class="row wood">
-        <div class="col-sm-12 pb-5"> -->
-            <!-- redes sociales -->
-            <div class="row wood pt-5">
-                <div class="col-sm-12">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" 
-                            href="https://api.whatsapp.com/send?phone=528118952279" 
-                            target="_blank">
-                                <i class="fab fa-whatsapp h2"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="https://www.facebook.com/C2-Technologies-107211194272281" 
-                            target="_blank">
-                                <i class="fab fa-facebook h2"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+        <!-- redes sociales -->
+        <div class="row wood pt-5">
+            <div class="col-sm-12">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" 
+                        href="https://api.whatsapp.com/send?phone=528118952279" 
+                        target="_blank">
+                            <i class="fab fa-whatsapp h2"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="https://www.facebook.com/C2-Technologies-107211194272281" 
+                        target="_blank">
+                            <i class="fab fa-facebook h2"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <!-- telefonos -->
-            <div class="row wood">
-                <div class="col-sm-12">
-                    <ul class="nav justify-content-center">
-                        <!-- <li class="nav-item">
-                            <a href="" class="nav-link text-white">
+        </div>
+        <!-- telefonos -->
+        <div class="row wood">
+            <div class="col-sm-12">
+                <ul class="nav justify-content-center">
+                    <!-- <li class="nav-item">
+                        <a href="" class="nav-link text-white">
+                        <i class="fas fa-phone"></i>
+                        8118511071
+                        </a>
+                    </li> -->
+                        <li class="nav-item">
+                        <a href="" class="nav-link text-white">
                             <i class="fas fa-phone"></i>
-                            8118511071
-                            </a>
-                        </li> -->
-                            <li class="nav-item">
-                            <a href="" class="nav-link text-white">
-                                <i class="fas fa-phone"></i>
-                                8118952279
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link text-white">
-                            <i class="fas fa-phone"></i>
-                            8124296889
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- copyright -->
-            <div class="row wood">
-                <div class="col-sm-12">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <a href="" class="nav-link text-white">
-                                <i class="far fa-copyright"></i>
-                                C2 - Technologies
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        <!-- </div>
-    </div> -->
-    </div>
-    <!-- Modal registro-->
-    <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="modalRegistro" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="modalRegistroTitle">Registrarse</h5>
-            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                      <label for="formGroupExampleInput">Email</label>
-                      <input type="text" class="form-control" id="email" placeholder="e-mail de usuario">
-                    </div>
-                    <div class="form-group">
-                      <label for="formGroupExampleInput2">Contrasena</label>
-                      <input type="password" class="form-control" id="password" placeholder="Ingresa tu contrasena">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput3">Confirmar Contrasena</label>
-                        <input type="password" class="form-control" id="confirmPass" placeholder="confirma tu contraena">
-                    </div>
-                    <div class="form-group">
-                        <button type="button" id="crearUsuario" class="btn btn-lg btn-block btn-success">Enviar</button>
-                    </div>
-                  </form>
+                            8118952279
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link text-white">
+                        <i class="fas fa-phone"></i>
+                        8124296889
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+        <!-- copyright -->
+        <div class="row wood">
+            <div class="col-sm-12">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a href="" class="nav-link text-white">
+                            <i class="far fa-copyright"></i>
+                            C2 - Technologies
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-    <!-- Modal Ingresar-->
-    <div class="modal fade" id="modalIngreso" tabindex="-1" role="dialog" aria-labelledby="modalIngreso" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="modalIngresoTitle">Ingresar</h5>
-            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                      <label for="formGroupExampleInput">Email</label>
-                      <input type="text" class="form-control" id="emailIngreso" placeholder="e-mail de usuario">
-                    </div>
-                    <div class="form-group">
-                      <label for="formGroupExampleInput2">Contrasena</label>
-                      <input type="password" class="form-control" id="passwordIngreso" placeholder="Ingresa tu contrasena">
-                    </div>
-                    <div class="form-group">
-                        <button type="button" id="ingresar" class="btn btn-lg btn-block btn-success">Enviar</button>
-                    </div>
-                  </form>
-            </div>
-        </div>
-        </div>
-    </div>
-    <!-- modal loader -->
-    <!-- <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-transparent border-0">
-                <div class="text-center">
-                    <div class="lds-roller">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/constantes.js?v=170520202304"></script>
-    <script src="js/index.js?v=170520202304"></script>
+    <script src="js/constantes.js?v=131020201903"></script>
+    <script src="js/index.js?v=131020201903"></script>
 </body>
 </html>

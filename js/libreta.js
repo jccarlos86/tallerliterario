@@ -11,6 +11,8 @@ function autoGuardar(tiempo){
         fechaUltimaVezGuardado();
     }, mili);
     sesion.timer.timerId = timeId;
+    $("#alertAutoGuardado").text("Guardado automatico ejecuntandose cada " + tiempo + " minuto(s)");
+    $("#alertAutoGuardado").show();
 }
 
 function limpiarAutoGuardar(id){
@@ -21,6 +23,27 @@ function fechaUltimaVezGuardado(){
     var fecha = new Date();
     var fechaString = fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear() + " - " + fecha.getHours() + ":" + fecha.getMinutes();
     $("#ultimaVezGuardado").html("Ultima vez guardado: " + fechaString);
+    var inter = setInterval(() => {
+        $("#ultimaVezGuardado").fadeOut(500, function(){
+            $("#ultimaVezGuardado").fadeIn(500)
+        });
+    }, 3000);
+
+    setTimeout(() => {
+        clearInterval(inter);
+    }, 3500);
+    // $("#ultimaVezGuardado").addClass("animate animate__bounce");
+    // $("#ultimaVezGuardado").on("animationend", function(){
+    //     $(this).remove();
+    // });
+}
+
+function validarBotones(){
+    if(sesion.timer.timerId > -1){
+        $("#btnDetenerAutoGuardar").show();
+    }else{
+        $("#btnDetenerAutoGuardar").hide();
+    }
 }
 
 function obtenerTexto(){
@@ -41,7 +64,6 @@ function obtenerTexto(){
                     break;
                 case response != "null":
                     var data = JSON.parse(response);
-                    console.log(data);
                     sesion.escrito.cantidadfilas = data.length;
                     sesion.escrito.version = data[0].Version;
                     sesion.escrito.titulo = unescape(data[0].Titulo);
@@ -143,7 +165,7 @@ function actualizarTexto(index, texto){
     $.ajax({
         data: {
             idx: index,
-            txt: texto,
+            txt: texto.trim(),
             idTexto: sesion.escrito.id,
             perfil: sesion.usuario.perfil
         },
@@ -183,7 +205,7 @@ function crearTexto(index, texto){
     $.ajax({
         data: {
             idx: index,
-            txt: texto,
+            txt: texto.trim(),
             idTexto: sesion.escrito.id,
             perfil: sesion.usuario.perfil,
             titulo: escape(sesion.escrito.titulo),
@@ -193,44 +215,95 @@ function crearTexto(index, texto){
         url:   '../php/libreta/crear.php',
         type:  'post',
         beforeSend: function () {
-            console.log("Enviando datos...");
+            // console.log("Enviando datos...");
         },
         success: function (response) {
-           //validar conexion...
-           console.log(response);
+        //    console.log(response);
         }
     });
 }
 
-function actualizarTitulo(){
-    var tit = $("#tituloEditar").val();
+function actualizarTituloGenero(){
+    var titulo = $("#tituloEditar").val().trim();
+    var genero = $("#generoEditar").val().trim();
+    if(titulo.length > 0 || genero.length > 0){
+        if(genero != sesion.escrito.genero){
+            actualizarGenero(genero);
+        }
+
+        if(titulo != sesion.escrito.titulo){
+            actualizarTitulo(titulo);
+        }
+
+    }else{
+        alert("los campos no pueden estar vacios.");
+    }
+}
+
+function actualizarTitulo(titulo){
     $.ajax({
         data: {
             idperfil: sesion.usuario.perfil,
             idtexto: sesion.escrito.id,
-            titulo: escape(tit),
+            titulo: escape(titulo)
         },
         url:   '../php/libreta/actualizarTitulo.php',
         type:  'post',
         beforeSend: function () {
-            console.log("Actualizando titulo...");
+            loader(true);
         },
         success: function (response) {
+            loader(false);
             switch(true){
                 case response == "true":
-                    sesion.escrito.titulo = tit;
-                    $("#titulo").html(tit);
+                    sesion.escrito.titulo = titulo;
+                    $("#titulo").html(titulo);
                     mostrarEditar(false);
-                    alert("Titulo actualizado correctamente.");
                     break;
                 case response == "Duplicado":
-                    alert("Ese titulo ya se encuentra asignado a otro texto.");
+                    alert("El titulo que intentas actualizar ya se encuentra asignado a otro texto.");
                     $("#titulo").html(sesion.escrito.titulo);
+                    $("#tituloEditar").val(sesion.escrito.titulo);
                     break;
                 case response.startsWith("Connection"):
                     console.log("Error: " + response);
                     break;
             }
+        },
+        error: function(error){
+            console.log(error);
+            loader(false);
+        }
+    });
+}
+
+function actualizarGenero(genero){
+    $.ajax({
+        data: {
+            idperfil: sesion.usuario.perfil,
+            idtexto: sesion.escrito.id,
+            genero: escape(genero)
+        },
+        url:   '../php/libreta/actualizarGenero.php',
+        type:  'post',
+        beforeSend: function () {
+            loader(true);
+        },
+        success: function (response) {
+            loader(false);
+            switch(true){
+                case response == "true":
+                    sesion.escrito.genero = genero;
+                    mostrarEditar(false);
+                    break;
+                case response.startsWith("Connection"):
+                    console.log("Error: " + response);
+                    break;
+            }
+        },
+        error: function(error){
+            console.log(error);
+            loader(false);
         }
     });
 }
@@ -310,23 +383,26 @@ function verDiferencias(){
 
 function mostrarEditar(mostrar){
     if(mostrar){
-        $("#tituloEditar").val($("#titulo").html());
-        $(".datos-texto-editar").show();
-        $(".datos-texto-lectura").hide();
+        $(".texto-lectura").hide();
+        $(".texto-editar").show();
+        $("#tituloEditar").val(sesion.escrito.titulo);
+        $("#generoEditar").val(sesion.escrito.genero);
     }
 
     if(!mostrar){
-        $(".datos-texto-editar").hide();
-        $(".datos-texto-lectura").show();
+        $(".texto-lectura").show();
+        $(".texto-editar").hide();
     }
 }
 
 function detenerAutoGuardar(){
     if(sesion.timer.timerId > -1){
         limpiarAutoGuardar(sesion.timer.timerId);
-        timer.timeId = -1;
+        sesion.timer.timerId = -1;
     }
     $("#selectMinutos").val("");
+    $("#alertAutoGuardado").text("");
+    $("#alertAutoGuardado").hide();
 }
 
 function versionSeleccionada(version){
@@ -490,6 +566,37 @@ function getVersiones(){
     });
 }
 
+function enviarTextoTaller(){
+    $("#guardarTexto").click();
+    $.ajax({
+        data: {
+            id: sesion.escrito.id,
+            perfil: sesion.usuario.perfil,
+            version: sesion.escrito.version
+        },
+        url:   '../php/perfil/EnviarTextoTaller.php',
+        type:  'post',
+        beforeSend: function(){
+            loader(true);
+            console.log("Enviando texto al taller...");
+        },
+        success:  function (response) {
+            switch(true){
+                case response.startsWith("Connection"):
+                    loader(false);
+                    console.log("Error: " + response);
+                    break;
+                case response.startsWith("true"):
+                    window.location = "perfil.html";
+                    break;   
+                case response.startsWith("Invalido"):
+                    alert(response);
+                    break;
+            }
+        }
+    });
+}
+
 function crearNuevaVersion(){
     loader(true);
     var texto = $("#hojaTexto").val().split("\n");
@@ -511,7 +618,6 @@ function crearNuevaVersion(){
             },
             success: function (response) {
                 if(response === "true") {
-                    //alert("Nueva version creada correctamente");
                     setTimeout(() => {
                         window.location.reload();
                     }, 1000);
@@ -528,9 +634,11 @@ $(document).ready(function(){
         $(".datos-texto-editar").hide();
         sesion.usuario.perfil = getCookie("perfilId");
         sesion.escrito.id = getCookie("escritoid");
+        mostrarEditar(false);
+        $("#alertAutoGuardado").hide();
         obtenerTexto();
     }else{
-       // window.location.href = "index.html";
+       window.location.href = "index.html";
     }
 });
 
@@ -538,12 +646,14 @@ $("#guardarTexto").click(function(){
     seccionarTexto();
 });
 
+$("#icono_autoguardar").click(validarBotones);
+
 $("#btnAutoGuardar").click(function(){
     autoGuardar($("#selectMinutos").val());
 });
 
 $("#actualizarTitulo").click(function(){
-    actualizarTitulo();
+    actualizarTituloGenero();
 });
 
 $("#btnDetenerAutoGuardar").click(function(){
@@ -578,3 +688,7 @@ $("#viewVersion").change(function(){
 $("#btnVersionSeleccionada").click(function(){
     $("#viewVersion").val(sesion.escrito.version);
 });
+
+$("#enviarTaller").click(enviarTextoTaller);
+
+loader(false)

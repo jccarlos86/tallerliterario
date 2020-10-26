@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="css/fuentes.css?v=170520202304">
     <title>Perfil</title>
 </head>
-<body class="bg-light baloo">
+<body class="bg-dark baloo p-0 m-0">
     <div class="container-fluid">
         <!-- menu de opciones -->
         <div class="row pb-3">
             <div class="col-sm-12 p-0">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom p-2">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -66,31 +66,162 @@
                                 </div>
                             </li> -->
                             <li class="nav-item mr-4">
-                                <button type="button" class="btn btn-outline-success rounded-circle" data-toggle="modal" data-target="#modalNuevoTexto" >
+                                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalNuevoTexto" >
                                     <i class="fas fa-feather-alt"></i>
+                                    Crear texto
                                 </button>
                             </li>
                             <li class="nav-item mr-4">
-                                <a class="nav-link" href="index.html">Home</a>
+                                <a class="nav-link" href="index.html">Ir al inicio</a>
                             </li>
                             <!-- <li class="nav-item mr-4">
                                 <a id="miTallereo" class="nav-link prevent-default" href="#">Tallereo</a>
                             </li> -->
                             <li class="nav-item mr-4">
-                                <a class="nav-link" href="taller.html">Taller</a>
+                                <a class="nav-link" href="taller.html">Ir al taller</a>
+                            </li>
+                            <li class="nav-item mr-4">
+                                <form class="form-inline my-2 my-lg-0">
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-6">
+                                            <select id="inputFiltro" class="form-control">
+                                                <option selected value="contenga">Contenga</option>
+                                                <!-- <option value="no-contenga">No contenga</option> -->
+                                                <option value="inicie">Inicie con</option>
+                                                <option value="termine">Termine con</option>
+                                                <option value="exacto">Exactamente igual a</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <input id="buscarTexto" class="form-control" type="search" placeholder="Buscar en mis textos" aria-label="Buscar textos">
+                                        </div>
+                                      </div>
+                                    <!-- <input id="buscarTexto" class="form-control mr-sm-2" type="search" placeholder="Buscar en mis textos" aria-label="Buscar en mis textos"> -->
+                                </form>
                             </li>
                         </ul>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input id="buscarTexto" class="form-control mr-sm-2" type="search" placeholder="Buscar en mis textos" aria-label="Buscar en mis textos">
-                        </form>
                     </div>
                 </nav>
             </div>
         </div>
         
+        <!-- informacion del usuario -->
         <div class="row pt-2 pb-2">
-            <!-- semblanza del usuario -->
-            <div class="col-sm-3 p-0">
+            <div class="col-sm-12">
+                <div class="card w-75 mx-auto m-2">
+                    <h5 class="card-header">Acerca del autor</h5>
+                    <div class="card-body">
+                        <div class="atuor-lectura">
+                            <h5 class="card-title">
+                                <span id="nombre" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span> 
+                                <span id="apellido" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span> (
+                                <span id="usuario" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span> )
+                            </h5>
+                            <p class="card-text" id="acercaDe"></p>
+                            <a href="#" id="editarDatosUsuario" class="btn btn-primary prevent-default">Editar</a>
+                        </div>
+                        <div class="autor-editar">
+                            <form>
+                                <div class="form-group">
+                                    <label for="nombreUsuarioEditar">Nombres</label>
+                                    <input type="text" class="form-control" id="nombreUsuarioEditar" placeholder="Nombres">
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellidoUsuarioEditar">Apellidos</label>
+                                    <input type="text" class="form-control" id="apellidoUsuarioEditar" placeholder="Apellidos">
+                                </div>
+                                <div class="form-group">
+                                    <label for="UsuarioEditar">Usuario</label>
+                                    <input type="text" class="form-control" id="UsuarioEditar" placeholder="Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordUsuarioEditar">Contraseña</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <a href="#" id="verPass" class="ver-password prevent-default" data-ver="1">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                                                        <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" id="ocultarPass" class="ver-password prevent-default" data-ver="0">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-slash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                                                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299l.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                                                        <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709z"/>
+                                                        <path fill-rule="evenodd" d="M13.646 14.354l-12-12 .708-.708 12 12-.708.708z"/>
+                                                    </svg>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <input type="password" class="form-control" id="passwordUsuarioEditar" placeholder="Editar contraseña">
+                                    </div>
+
+
+                                    <!-- <label for="passwordUsuarioEditar">
+                                        Contraseña
+                                        <button type="button" id="verPass" class="btn btn-outline-primary ver-password" data-ver="1">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                                                <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                              </svg>
+                                        </button>
+                                        <button type="button" id="ocultarPass" class="btn btn-outline-warning ver-password" data-ver="0">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-slash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                                                <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299l.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                                                <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709z"/>
+                                                <path fill-rule="evenodd" d="M13.646 14.354l-12-12 .708-.708 12 12-.708.708z"/>
+                                              </svg>
+                                        </button>
+                                    </label>
+                                    <input type="password" class="form-control" id="passwordUsuarioEditar" placeholder="Editar contraseña"> -->
+                                </div>
+                                <div class="form-group">
+                                    <label for="acercaUsuarioEditar">Acerca del autor</label>
+                                    <textarea class="form-control" id="acercaUsuarioEditar" rows="3" placeholder="acerca del autor"></textarea>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <button type="button" id="cancelarEditarUsuario" class="btn btn-danger">Cancelar</button>
+                                    <button type="button" id="guardarEditarUsuario" class="btn btn-success">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- actividad del autor -->
+        <div class="row pt-2 pb-2">
+            <div class="col-sm-12">
+                <div class="card w-75 mx-auto">
+                    <h5 class="card-header">Actividad del autor</h5>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-transparent">
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="#" id="todos_textos" class="prevent-default filtro-texto" data-filtro="todos">
+                                    Textos creados ( <span class="text-success" id="textosCreados"></span> )
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="#" id="textos_libreta" class="prevent-default filtro-texto" data-filtro="libreta">
+                                    Textos en la libreta ( <span class="text-success" id="textosLibreta"></span> )
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="#" id="textos_taller" class="prevent-default filtro-texto" data-filtro="taller">
+                                    Textos enviados al taller ( <span class="text-success" id="textosTaller"></span> )
+                                </a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+            <!-- <div class="col-sm-3 p-0">
                 <div class="container-fluid">
                     <div class="row pt-1 pb-2">
                         <div class="col-sm-12 text-center">
@@ -98,7 +229,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 text-center">                           
+                        <div class="col-sm-12 text-center">                            -->
                             <!-- <div class="main">
                                 <h1>Mostrando imagen almacenada en MySQL</h1>
                                 <div class="panel panel-primary">
@@ -118,7 +249,7 @@
                                 </div>
                             </form> -->
                             
-                            <ul class="list-group list-group-flush datos-usuario">
+                            <!-- <ul class="list-group list-group-flush datos-usuario">
                                 <li class="list-group-item">
                                     <span id="usuario" class="text-muted text-capitalize mt-2 mb-2 datos-usuario-lectura"></span>
                                     <div class="input-group input-group-sm datos-usuario-editar">
@@ -136,13 +267,13 @@
                                     <div class="input-group input-group-sm datos-usuario-editar">
                                         <input type="text" class="form-control" aria-label="Sizing example input" id="apellidoUsuarioEditar">
                                     </div>
-                                </li>
+                                </li> -->
                                 <!-- <li class="list-group-item">
                                     <div class="input-group input-group-sm mb-3 datos-usuario-editar">
                                         <input type="text" class="form-control" aria-label="Sizing example input" id="passwordUsuarioEditar" placeholder="Editar contraseña">
                                     </div>
                                 </li> -->
-                                <li class="list-group-item">
+                                <!-- <li class="list-group-item">
                                     <a href="#" id="editarDatosUsuario" class="m-2 datos-usuario-lectura prevent-default">
                                         <small>Editar datos</small>
                                     </a>
@@ -157,162 +288,135 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-9 p-0">
-                <div class="container-fluid">
-                    <div class="row pt-1 pb-2">
-                        <div class="col-sm-12">
-                            <table id="tblTextos" class="table">
-                                <thead>
-                                  <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">T&iacute;tulo</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
-                            <table id="tblTextosTaller" class="table">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">Textos en el taller</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            </div> -->
+        
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="tblTextos" class="table table-light w-75 mx-auto">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">T&iacute;tulo</th>
+                            <!-- <th scope="col">Comentarios</th> -->
+                            <th scope="col">Genero</th>
+                            <th scope="col">Versiones</th>
+                            <th scope="col">Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot></tfoot>
+                </table>
             </div>
         </div>
 
         <!-- modal -->
-        <div class="modal fade" id="modalNuevoTexto" tabindex="-1" role="dialog" aria-labelledby="modalNuevoTextoTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="modalNuevoTextoTitle">Crear un nuevo texto</h5>
-                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <label for="tituloTexto">Titulo del Texto</label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="tituloTexto" aria-describedby="basic-addon3" placeholder="Escribe un titulo para tu texto">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- modal nuevo texto-->
+                <div class="modal fade" id="modalNuevoTexto" tabindex="-1" role="dialog" aria-labelledby="modalNuevoTextoTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modalNuevoTextoTitle">Crear un nuevo texto</h5>
+                            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                             </div>
-                            <label for="tituloTexto">Genero del texto</label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="generoTexto" aria-describedby="basic-addon3" placeholder="Escribe un genero para tu texto">
+                            <div class="modal-body">
+                                <form>
+                                    <label for="tituloTexto">Titulo del Texto</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="tituloTexto" aria-describedby="basic-addon3" placeholder="Escribe un titulo para tu texto">
+                                    </div>
+                                    <label for="tituloTexto">Genero del texto</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="generoTexto" aria-describedby="basic-addon3" placeholder="Escribe un genero para tu texto">
+                                    </div>
+                                    <div class="input-group mb-">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="irTexto">
+                                            <label class="custom-control-label" for="irTexto">Ir al texto despu&eacute;s de crearlo.</label>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="input-group mb-">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="irTexto">
-                                    <label class="custom-control-label" for="irTexto">Ir al texto despu&eacute;s de crearlo.</label>
-                                </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
+                            <button type="button" class="btn btn-success" id="btnCrearTexto">Crear</button>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnCrearTexto">Crear</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- modal borrar -->
-        <div class="modal fade" id="modalBorrarTexto" tabindex="-1" role="dialog" aria-labelledby="modalBorrarTextoTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="modalBorrarTextoTitle">Eliminar texto</h5>
-                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <p class="text-muted text-center">
-                                Estas a punto de borrar el texto llamado <br>
-                                <span id="lblTituloBorrar" class="text-uppercase text-danger mt-3 mb-3"></span><br>
-                                Seguro de que deseas continuar?
-                            </p>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnBorrarTexto">Borrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- modal taller -->
-        <div class="modal fade" id="modalTaller" tabindex="-1" role="dialog" aria-labelledby="modalTallerTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="modalTallerTitle">Enviar texto al taller</h5>
-                    <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <p class="text-center">
-                                <i class="fas fa-envelope h1"></i>
-                            </p>
-                            <p class="text-muted text-center">
-                                Estas a punto de enviar al taller literario tu texto llamado: <br>
-                                <span id="lblTituloTaller" class="text-uppercase text-success mt-3 mb-3"></span><br>
-                                recuerda que podras interactuar con los demas usuarios, quienes te apoyaran <br>
-                                para enriquecer tu texto.<br/>
-                                Elige que version de tu texto deseas enviar al taller<br/>
-                                Las demas versiones seran eliminadas.<br/>
-                                <select class="custom-select mr-sm-2" name="selVerTaller" id="selVerTaller"></select>
-                            </p>
-                            <p class="text-muted text-center">
-                                deseas continuar?
-                            </p>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-success" id="btnEnviarTaller">Enviar</button>
+                <!-- modal borrar -->
+                <div class="modal fade" id="modalBorrarTexto" tabindex="-1" role="dialog" aria-labelledby="modalBorrarTextoTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modalBorrarTextoTitle">Eliminar texto</h5>
+                            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <p class="text-muted text-center">
+                                        Estas a punto de borrar el texto llamado <br>
+                                        <span id="lblTituloBorrar" class="text-uppercase text-danger mt-3 mb-3"></span><br>
+                                        Seguro de que deseas continuar?
+                                    </p>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
+                            <button type="button" class="btn btn-success" id="btnBorrarTexto">Borrar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- modal loader -->
-        <!-- <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-transparent border-0">
-                    <div class="text-center">
-                        <div class="lds-roller">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                <!-- modal taller -->
+                <div class="modal fade" id="modalTaller" tabindex="-1" role="dialog" aria-labelledby="modalTallerTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modalTallerTitle">Enviar texto al taller</h5>
+                            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <p class="text-center">
+                                        <i class="fas fa-envelope h1"></i>
+                                    </p>
+                                    <p class="text-muted text-center">
+                                        Estas a punto de enviar al taller literario tu texto llamado: <br>
+                                        <span id="lblTituloTaller" class="text-uppercase text-success mt-3 mb-3"></span><br>
+                                        recuerda que podras interactuar con los demas usuarios, quienes te apoyaran <br>
+                                        para enriquecer tu texto.<br/>
+                                        Elige que version de tu texto deseas enviar al taller<br/>
+                                        Las demas versiones seran eliminadas.<br/>
+                                        <select class="custom-select mr-sm-2" name="selVerTaller" id="selVerTaller"></select>
+                                    </p>
+                                    <p class="text-muted text-center">
+                                        deseas continuar?
+                                    </p>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-success" id="btnEnviarTaller">Enviar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <script src="resources/jquery/jquery-3.2.1.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/constantes.js?v=170520202304"></script>
-    <!-- <script src="js/constantesPerfil.js?v=170520202304"></script> -->
-    <script src="js/perfil.js?v=170520202304"></script>
+    <script src="js/constantes.js?v=141020201901"></script>
+    <script src="js/perfil.js?v=141020201901"></script>
 </body>
 </html>

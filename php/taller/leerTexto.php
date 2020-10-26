@@ -22,8 +22,12 @@ if($sel){
         $txt = $row['texto'];
         $nombre = $row['nombres'];
         $user = $row['usuario'];
-        $jsonArray[] = array('Titulo' => $titulo, 'Index' => $idx, 'Texto' => $txt,
-        'Autor' => $nombre . ' ( ' . $user . ' )');
+        $jsonArray[] = array(
+            'Titulo' => $titulo, 
+            'Index' => $idx, 
+            'Texto' => $txt,
+            'Autor' => $nombre . ' ( ' . $user . ' )'
+        );
     }
     $result = json_encode($jsonArray);
 }else{
